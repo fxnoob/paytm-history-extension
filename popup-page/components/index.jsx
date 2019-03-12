@@ -44,7 +44,7 @@ function MediaControlCard(props) {
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography component="h6" variant="h6">
-                        Paytm-Histroy
+                        Paytm Histroy
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary">
                         Rs.00
@@ -52,10 +52,10 @@ function MediaControlCard(props) {
                 </CardContent>
                 <div className={classes.controls}>
                     <IconButton aria-label="Previous">
-                        {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
+                        <PlayArrowIcon className={classes.playIcon} />
                     </IconButton>
                     <IconButton aria-label="Play/pause">
-                        <PlayArrowIcon className={classes.playIcon} />
+                        Login
                     </IconButton>
                     <IconButton aria-label="Next">
                         {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
