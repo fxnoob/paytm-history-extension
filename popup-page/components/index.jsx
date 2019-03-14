@@ -1,14 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
+
+import Db  from '../../src/utils/db';
 
 const styles = theme => ({
     card: {
@@ -17,6 +15,7 @@ const styles = theme => ({
     details: {
         display: 'flex',
         flexDirection: 'column',
+        minWidth: '200px'
     },
     content: {
         flex: '1 0 auto',
@@ -35,45 +34,54 @@ const styles = theme => ({
         width: 38,
     },
 });
+const db = new Db();
 
-function MediaControlCard(props) {
-    const { classes, theme } = props;
-
-    return (
-        <Card className={classes.card}>
-            <div className={classes.details}>
-                <CardContent className={classes.content}>
-                    <Typography component="h6" variant="h6">
-                        Paytm Histroy
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                        Rs.00
-                    </Typography>
-                </CardContent>
-                <div className={classes.controls}>
-                    <IconButton aria-label="Previous">
-                        <PlayArrowIcon className={classes.playIcon} />
-                    </IconButton>
-                    <IconButton aria-label="Play/pause">
-                        Login
-                    </IconButton>
-                    <IconButton aria-label="Next">
-                        {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
-                    </IconButton>
-                </div>
-            </div>
-            <CardMedia style={{backgroundSize: 'contain'}}
-                className={classes.cover}
-                image="/images/paytm-icon.png"
-                title="Live from space album cover"
-            />
-        </Card>
-    );
+class  MediaControlCard extends React.Component{
+    state = {
+       isLoggedIn: false
+    };
+    constructor(props) {
+        super(props);
+    }
+    componentDidMount () {
+        db.get("dataMounted")
+          .then(res=>{
+              if (res === true) {
+                  this.setState({isLoggedIn: true});
+              }
+          })
+          .catch(e=>{
+              console.log(e);
+          })
+    }
+    render() {
+        const { classes, theme } = this.props;
+        return (
+          <Card className={classes.card}>
+              <div className={classes.details}>
+                  <CardContent className={classes.content}>
+                      <Typography component="h6" variant="h6">
+                          Paytm History
+                      </Typography>
+                      <Typography variant="subtitle1" color="textSecondary">
+                          Click 'Login' button
+                          to see total money u have spent.
+                      </Typography>
+                  </CardContent>
+                  <div className={classes.controls}>
+                      <IconButton aria-label="Play/pause">
+                          Login
+                      </IconButton>
+                  </div>
+              </div>
+              <CardMedia style={{backgroundSize: 'contain'}}
+                         className={classes.cover}
+                         image="/images/paytm-icon.png"
+                         title="Live from space album cover"
+              />
+          </Card>
+        );
+    }
 }
-
-MediaControlCard.propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles, { withTheme: true })(MediaControlCard);
