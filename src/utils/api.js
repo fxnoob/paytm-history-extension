@@ -1,3 +1,7 @@
+import { Cookie } from "./cookie";
+
+const cookie = new Cookie()
+
 export class Api {
   constructor () {
     this.endPoint = "https://paytm.com/";
@@ -20,20 +24,10 @@ export class Api {
       xhr.send();
     })
   }
-  checkLogin() {
-    return fetch(url, {
-      method: "GET", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, cors, *same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-        cookie: JSON.stringify({}),
-      },
-      redirect: "follow", // manual, *follow, error
-      referrer: "no-referrer", // no-referrer, *client
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
+  async checkLogin() {
+    const apiEndPoint = this.endPoint + "shop/orderhistory";
+    const cookies = await cookie.getAllCookiefromDomain("paytm.com");
+    return fetch("https://api.github.com/users/swapnilbangare")
   }
   fetchHistory() {
 

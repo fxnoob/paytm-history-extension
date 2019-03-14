@@ -9,9 +9,10 @@ const dbController = new Db();
 //when extension is loaded first time
 dbController.get("isFirstTimeLoad").then((res) => {
   if(res === undefined) {
-    dbController.set(SchemaController.data).then(() => {
-      dbController.set({"isFirstTimeLoad":true});
-    });
+    dbController.set(SchemaController.data)
+      .then(() => {
+        dbController.set({"isFirstTimeLoad":true});
+      });
   }
 })
   .catch((e)=>{});

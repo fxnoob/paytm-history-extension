@@ -4,7 +4,10 @@ export class Cookie {
   getAllCookiefromDomain(domain) {
     return new Promise((resolve, reject) => {
       chrome.cookies.getAll({ domain: domain } , (cookies) => {
-        resolve(cookies);
+        const data = cookies.map(cookie => {
+            return cookie.name + "=" + cookie.value;
+        })
+        resolve(data.join(";"));
       });
     });
   }
