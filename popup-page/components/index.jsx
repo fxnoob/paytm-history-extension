@@ -5,6 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Home from "./home";
+import Login from "./login";
 
 import Db  from '../../src/utils/db';
 import { Cookie } from "../../src/utils/cookie";
@@ -42,24 +44,25 @@ const api = new Api();
 
 class  MediaControlCard extends React.Component{
     state = {
-       isLoggedIn: false
+       isDataMounted: false ,
     };
     constructor(props) {
         super(props);
     }
     componentDidMount () {
-        api.fetchHistory(api.historyApiEndpoint)
-          .then(res=> {
-              console.log(api.HistoryData);
-          })
-          .catch(e=>{
-              console.log("error",e);
-              console.log(api.HistoryData);
-          });
+        // api.fetchHistory(api.historyApiEndpoint)
+        //   .then(res=> {
+        //       console.log(api.HistoryData);
+        //   })
+        //   .catch(e=>{
+        //       console.log("error",e);
+        //       console.log(api.HistoryData);
+        //   });
+        /** check if data was fetched previously */
         db.get("dataMounted")
           .then(res=>{
               if (res === true) {
-                  this.setState({isLoggedIn: true});
+                  this.setState({isDataMounted: true});
               }
           })
           .catch(e=>{
@@ -70,22 +73,7 @@ class  MediaControlCard extends React.Component{
         const { classes, theme } = this.props;
         return (
           <Card className={classes.card}>
-              <div className={classes.details}>
-                  <CardContent className={classes.content}>
-                      <Typography component="h6" variant="h6">
-                          Paytm History
-                      </Typography>
-                      <Typography variant="subtitle1" color="textSecondary">
-                          Click 'Login' button
-                          to see total money u have spent.
-                      </Typography>
-                  </CardContent>
-                  <div className={classes.controls}>
-                      <IconButton aria-label="Play/pause">
-                          Login
-                      </IconButton>
-                  </div>
-              </div>
+              {this.state.isDataMounted ? (<Home/>):(<Login/>)}
               <CardMedia style={{backgroundSize: 'contain'}}
                          className={classes.cover}
                          image="/images/paytm-icon.png"
