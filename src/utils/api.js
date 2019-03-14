@@ -10,7 +10,7 @@ export class Api {
     this.HistoryData = [];
     this.fetchHistory = this.fetchHistory.bind(this);
   }
-  /** check if user is logged into the  site  */
+  /** Fetch paytm User history Details  */
   async fetchHistory(apiEndPoint) {
     return fetch(apiEndPoint)
       .then(res => res.json())
@@ -20,7 +20,7 @@ export class Api {
          if(res.hasOwnProperty("nextpage")) {
            return this.fetchHistory("https://paytm.com"+res.nextpage+30);
          } else {
-           return 0;
+           return "DONE";
          }
       })
   }
