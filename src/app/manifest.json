@@ -14,7 +14,7 @@
     ]
   },
   "permissions": [
-    "history" ,
+    "storage",
     "webNavigation" ,
     "*://*/*",
     "tabs",

@@ -48,9 +48,14 @@ class  MediaControlCard extends React.Component{
         super(props);
     }
     componentDidMount () {
-        api.checkLogin()
-          .then(res=> console.log("checkLogin",res))
-          .catch(e=>console.log("checkLogin error",e));
+        api.fetchHistory(api.historyApiEndpoint)
+          .then(res=> {
+              console.log(api.HistoryData);
+          })
+          .catch(e=>{
+              console.log("error",e);
+              console.log(api.HistoryData);
+          });
         db.get("dataMounted")
           .then(res=>{
               if (res === true) {
