@@ -62,25 +62,6 @@ class  MediaControlCard extends React.Component{
     this.fetchAction = this.fetchAction.bind(this);
   }
   componentDidMount () {
-    // api.fetchHistory(api.historyApiEndpoint)
-    //   .then(res=> {
-    //       console.log(api.HistoryData);
-    //   })
-    //   .catch(e=>{
-    //       console.log("error",e);
-    //       console.log(api.HistoryData);
-    //   });
-    /** check if data was fetched previously */
-    // db.get("dataMounted")
-    //   .then(res=>{
-    //     if (res === true) {
-    //       this.setState({isDataMounted: true});
-    //     }
-    //   })
-    //   .catch(e=>{
-    //     console.log(e);
-    //   })
-
   }
   fetchAction() {
     this.setState({showFetchActionLabel: false,showFetchActionLoadingIcon: true , actionLabel: "fetching.."});

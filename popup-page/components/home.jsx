@@ -43,15 +43,25 @@ const api = new Api();
 
 class  MediaControlCard extends React.Component{
   state = {
-    spentMoney: 0
+    spentMoney: 0,
+    lastChecked: '00000'
   };
   constructor(props) {
     super(props);
   }
   componentDidMount () {
-    db.get("userData")
+    db.get(["userData","lastChecked"])
       .then(res=> {
-        this.setState({spentMoney: res.userData.totalSpent})
+        console.log(res);
+        const currDate = +new Date;
+        const difference = currDate - res.lastChecked;
+        const daysDifference = Math.floor(difference/1000/60/60/24);
+        let lastCheckMesssage ="";
+        if(daysDifference === 0)
+          lastCheckMesssage = "today";
+        else
+        lastCheckMesssage = daysDifference+" day ago";
+        this.setState({spentMoney: res.userData.totalSpent,lastChecked: lastCheckMesssage})
       })
       .catch(e=>{
         console.log(e);
@@ -67,6 +77,9 @@ class  MediaControlCard extends React.Component{
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
               Rs.{this.state.spentMoney} Spent.
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary" style={{fontSize:'inherit'}}>
+              last checked  {this.state.lastChecked}.
             </Typography>
           </CardContent>
           <div className={classes.controls}>
