@@ -4,8 +4,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Db  from '../../src/utils/db';
-import { Cookie } from "../../src/utils/cookie";
-import {Api } from "../../src/utils/api";
 
 const styles = theme => ({
   card: {
@@ -38,8 +36,6 @@ const styles = theme => ({
   },
 });
 const db = new Db();
-const cookie = new Cookie();
-const api = new Api();
 
 class  MediaControlCard extends React.Component{
   state = {
