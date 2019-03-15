@@ -9,6 +9,10 @@ const styles = theme => ({
   card: {
     display: 'flex',
   },
+  RefreshShareDiv: {
+    fontSize:'14px',
+    marginBottom: '-14px'
+  },
   shareLink: {
   marginLeft: theme.spacing.unit
   },
@@ -95,12 +99,14 @@ class  MediaControlCard extends React.Component{
             <Typography variant="subtitle1" color="textSecondary" style={{fontSize:'inherit'}}>
               last checked  {this.state.lastChecked}.
             </Typography>
+            <div className={classes.RefreshShareDiv}>
             <Link href="/details.html" target="_blank">
               refresh
             </Link>
             <Link href="/details.html" target="_blank" className={classes.shareLink}>
               share
             </Link>
+            </div>
           </CardContent>
           <div className={classes.controls}>
             <Link href="/details.html" target="_blank" className={classes.link}>
