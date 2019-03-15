@@ -1,9 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-
+import Link from '@material-ui/core/Link';
 import Db  from '../../src/utils/db';
 import { Cookie } from "../../src/utils/cookie";
 import {Api } from "../../src/utils/api";
@@ -11,6 +10,10 @@ import {Api } from "../../src/utils/api";
 const styles = theme => ({
   card: {
     display: 'flex',
+  },
+  link: {
+    margin: theme.spacing.unit,
+    fontSize: "18px"
   },
   details: {
     display: 'flex',
@@ -40,30 +43,19 @@ const api = new Api();
 
 class  MediaControlCard extends React.Component{
   state = {
-    isDataMounted: false ,
+    spentMoney: 0
   };
   constructor(props) {
     super(props);
   }
   componentDidMount () {
-    // api.fetchHistory(api.historyApiEndpoint)
-    //   .then(res=> {
-    //       console.log(api.HistoryData);
-    //   })
-    //   .catch(e=>{
-    //       console.log("error",e);
-    //       console.log(api.HistoryData);
-    //   });
-    /** check if data was fetched previously */
-    // db.get("dataMounted")
-    //   .then(res=>{
-    //     if (res === true) {
-    //       this.setState({isDataMounted: true});
-    //     }
-    //   })
-    //   .catch(e=>{
-    //     console.log(e);
-    //   })
+    db.get("userData")
+      .then(res=> {
+        this.setState({spentMoney: res.userData.totalSpent})
+      })
+      .catch(e=>{
+        console.log(e);
+      })
   }
   render() {
     const { classes, theme } = this.props;
@@ -74,14 +66,13 @@ class  MediaControlCard extends React.Component{
               Paytm History
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              Click 'Login' button
-              to see total money u have spent.
+              Rs.{this.state.spentMoney} Spent.
             </Typography>
           </CardContent>
           <div className={classes.controls}>
-            <IconButton aria-label="Play/pause">
-              Login
-            </IconButton>
+            <Link href="/details.html" target="_blank" className={classes.link}>
+              Detailed Report
+            </Link>
           </div>
         </div>
     );

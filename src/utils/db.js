@@ -28,7 +28,7 @@ export default class Db {
   set (params) {
     return new Promise((resolve, reject) => {
       try {
-        chrome.storage.sync.set(params, () => {
+        chrome.storage.local.set(params, () => {
           resolve(params)
         })
       } catch (e) {
@@ -43,7 +43,7 @@ export default class Db {
   get (params) {
     return new Promise((resolve, reject) => {
       try {
-        chrome.storage.sync.get(params, (items) => {
+        chrome.storage.local.get(params, (items) => {
           if (items === undefined) { reject('Error') } else { resolve(items) }
         })
       } catch (e) {
@@ -58,7 +58,7 @@ export default class Db {
   remove (key_str) {
     return new Promise((resolve, reject) => {
       try {
-        chrome.storage.sync.remove(key_str, (res) => {
+        chrome.storage.local.remove(key_str, (res) => {
           resolve(key_str)
         })
       } catch (e) {

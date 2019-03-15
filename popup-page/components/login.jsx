@@ -8,7 +8,6 @@ import Warning from '@material-ui/icons/Warning';
 import Divider from '@material-ui/core/Divider'
 
 import Db  from '../../src/utils/db';
-import { Cookie } from "../../src/utils/cookie";
 import {Api } from "../../src/utils/api";
 
 const styles = theme => ({
@@ -45,7 +44,6 @@ const styles = theme => ({
   },
 });
 const db = new Db();
-const cookie = new Cookie();
 const api = new Api();
 
 class  MediaControlCard extends React.Component{
@@ -99,22 +97,29 @@ class  MediaControlCard extends React.Component{
         setTimeout(()=>{
           this.setState({message: ""});
         },5000);
+        const result = api.HistoryData.map(hd=> {
+          hd.orders.map(order=> {
+            totalSpent+= order.amount;
+          });
+        });
+        console.log(totalSpent);
         db.set({
           /** 0: if not logged in. 1 if logged in */
-          dataMounted: true ,
+          dataMounted: true,
           /** last time when apis was hit successfully */
-          lastChecked: +new Date ,
+          lastChecked: +new Date,
           /** user data fetched from apis */
           userData: {
             /**username not mandatory*/
-            userName: null ,
+            userName: null,
             /** total spent money by user based on history calculations */
-            totalSpent: totalSpent ,
+            totalSpent: totalSpent,
             /** extra user details */
-            extDetails: null ,
+            extDetails: null,
             /** Api's original response*/
-            apiOriginalResponse: null
-          })
+            apiOriginalResponse: api.HistoryData
+          }
+        });
       })
       .catch(e=>{
           console.log("error",e);
