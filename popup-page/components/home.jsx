@@ -54,11 +54,26 @@ class  MediaControlCard extends React.Component{
       .then(res=> {
         console.log(res);
         const currDate = +new Date;
-        const difference = currDate - res.lastChecked;
-        const daysDifference = Math.floor(difference/1000/60/60/24);
+        let difference = currDate - res.lastChecked;
+        let daysDifference = Math.floor(difference/1000/60/60/24);
         let lastCheckMesssage ="";
-        if(daysDifference === 0)
-          lastCheckMesssage = "today";
+        if(daysDifference === 0) {
+          difference -= daysDifference*1000*60*60*24;
+          const hoursDifference = Math.floor(difference/1000/60/60);
+          if(hoursDifference === 0) {
+            difference -= hoursDifference*1000*60*60
+            const minutesDifference = Math.floor(difference/1000/60);
+            if(minutesDifference === 0) {
+              difference -= minutesDifference*1000*60
+              const secondsDifference = Math.floor(difference/1000);
+              lastCheckMesssage = secondsDifference+ " seconds ago";
+            } else {
+              lastCheckMesssage = minutesDifference+ " minute ago";
+            }
+          } else {
+            lastCheckMesssage = hoursDifference+ " hour ago";
+          }
+        }
         else
         lastCheckMesssage = daysDifference+" day ago";
         this.setState({spentMoney: res.userData.totalSpent,lastChecked: lastCheckMesssage})
