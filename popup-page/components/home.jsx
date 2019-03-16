@@ -94,7 +94,7 @@ class  MediaControlCard extends React.Component{
               Paytm History
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              Rs.{this.state.spentMoney} Spent.
+              Rs.{this.state.spentMoney} spent.
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" style={{fontSize:'inherit'}}>
               last checked  {this.state.lastChecked}.
@@ -109,7 +109,7 @@ class  MediaControlCard extends React.Component{
             </div>
           </CardContent>
           <div className={classes.controls}>
-            <Link href="/details.html" target="_blank" className={classes.link}>
+            <Link href="/option.html" target="_blank" className={classes.link}>
               Detailed Report
             </Link>
           </div>

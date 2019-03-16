@@ -1,5 +1,10 @@
 export class Cookie {
-  constructor () {}
+  constructor () {
+    this.excludeCookies = [
+      "_gid" ,
+      "_ga"
+    ];
+  }
   /** get all cookies domain wise */
   getAllCookiefromDomain(domain) {
     return new Promise((resolve, reject) => {
@@ -14,7 +19,7 @@ export class Cookie {
  /**Cookie change listener for login check  */
  ListenToLoginCookie() {
    chrome.cookies.onChanged.addListener((info) => {
-     if(info.cookie.name!=='_gid' && info.cookie.name!=='_ga') {
+     if(!this.excludeCookies.contains(info.cookie.name)) {
        console.log(info);
      }
    });

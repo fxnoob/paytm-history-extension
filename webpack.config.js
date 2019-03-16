@@ -5,7 +5,8 @@ module.exports = {
     entry: {
         content_script: './content-scripts/App.jsx',
         background: './src/background.js',
-        popup: './popup-page/App.jsx'
+        popup: './popup-page/App.jsx' ,
+        option: './option-page/App.jsx'
     },
     module: {
         rules: [
@@ -39,8 +40,8 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin([
-            { from: './popup-page/popup.html', force: true } ,
-            { from: './src/app/', force: true }
+            { from: './src/app/', force: true } ,
+            { from: './popup-page/popup.html', force: true }
         ], {})
     ] ,
     output: {
