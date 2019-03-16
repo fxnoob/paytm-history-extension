@@ -18,11 +18,21 @@ export class Api {
         this.totalApiCalls++;
         this.HistoryData.push(res);
          if(res.hasOwnProperty("nextpage")) {
-           return this.fetchHistory("https://paytm.com"+res.nextpage+30);
+            this.sleep("https://paytm.com"+res.nextpage+30,2).then( (urlToCall) => {
+              this.fetchHistory(urlToCall);
+            });
          } else {
            return "DONE";
          }
       })
+  }
+
+  sleep(paramsToReturn , miliseconds) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+      resolve(paramsToReturn);
+      } , miliseconds);
+    });
   }
 }
 
