@@ -11,5 +11,12 @@ export class Cookie {
       });
     });
   }
-
+ /**Cookie change listener for login check  */
+ ListenToLoginCookie() {
+   chrome.cookies.onChanged.addListener((info) => {
+     if(info.cookie.name!=='_gid' && info.cookie.name!=='_ga') {
+       console.log(info);
+     }
+   });
+ }
 }

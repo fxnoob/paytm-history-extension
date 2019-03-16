@@ -17,8 +17,8 @@
     "unlimitedStorage",
     "storage",
     "webNavigation" ,
-    "*://*/*",
-    "tabs",
+    "*://paytm.com/*",
+    "*://*.paytm.com/*",
     "cookies"
   ],
   "browser_action": {

@@ -41,6 +41,8 @@ class  MediaControlCard extends React.Component{
     };
     constructor(props) {
         super(props);
+        this.gotoHome = this.gotoHome.bind(this);
+        this.gotoLogin = this.gotoLogin.bind(this);
     }
     componentDidMount () {
         /** check if data was fetched previously */
@@ -55,11 +57,17 @@ class  MediaControlCard extends React.Component{
               console.log(e);
           })
     }
+    gotoHome() {
+        this.setState({isDataMounted: true});
+    }
+    gotoLogin() {
+        this.setState({isDataMounted: false});
+    }
     render() {
         const { classes, theme } = this.props;
         return (
           <Card className={classes.card}>
-              {this.state.isDataMounted ? (<Home/>):(<Login/>)}
+              {this.state.isDataMounted ? (<Home gotoLogin={this.gotoLogin}/>):(<Login gotoHome={this.gotoHome}/>)}
               <CardMedia style={{backgroundSize: 'contain'}}
                          className={classes.cover}
                          image="/images/paytm-icon.png"

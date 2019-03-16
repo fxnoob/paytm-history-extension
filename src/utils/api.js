@@ -21,6 +21,12 @@ export class Api {
   /** Fetch paytm User history Details  */
   async fetchHistory(apiEndPoint) {
     return fetch(apiEndPoint)
+      .then(res=>{
+        if(res.status === 200) {
+          return res;
+        }
+        throw new Error(String(res.status));
+      })
       .then(res => res.json())
       .then(res=>{
         return this.sleep(res,1000);
