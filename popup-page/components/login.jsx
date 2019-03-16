@@ -100,7 +100,10 @@ class  MediaControlCard extends React.Component{
             /** Api's original response*/
             apiOriginalResponse: api.HistoryData
           }
-        });
+        })
+          .then((res) => {
+            this.props.gotoHome();
+          });
       })
       .catch(e=>{
           console.log("error",e);

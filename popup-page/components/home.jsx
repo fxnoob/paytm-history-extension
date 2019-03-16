@@ -4,12 +4,17 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Db  from '../../src/utils/db';
-import { Cookie } from "../../src/utils/cookie";
-import {Api } from "../../src/utils/api";
 
 const styles = theme => ({
   card: {
     display: 'flex',
+  },
+  RefreshShareDiv: {
+    fontSize:'14px',
+    marginBottom: '-14px'
+  },
+  shareLink: {
+  marginLeft: theme.spacing.unit
   },
   link: {
     margin: theme.spacing.unit,
@@ -38,8 +43,6 @@ const styles = theme => ({
   },
 });
 const db = new Db();
-const cookie = new Cookie();
-const api = new Api();
 
 class  MediaControlCard extends React.Component{
   state = {
@@ -91,14 +94,22 @@ class  MediaControlCard extends React.Component{
               Paytm History
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              Rs.{this.state.spentMoney} Spent.
+              Rs.{this.state.spentMoney} spent.
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" style={{fontSize:'inherit'}}>
               last checked  {this.state.lastChecked}.
             </Typography>
+            <div className={classes.RefreshShareDiv}>
+            <Link href="/details.html" target="_blank">
+              refresh
+            </Link>
+            <Link href="/details.html" target="_blank" className={classes.shareLink}>
+              share
+            </Link>
+            </div>
           </CardContent>
           <div className={classes.controls}>
-            <Link href="/details.html" target="_blank" className={classes.link}>
+            <Link href="/option.html" target="_blank" className={classes.link}>
               Detailed Report
             </Link>
           </div>

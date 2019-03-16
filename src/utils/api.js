@@ -10,10 +10,27 @@ export class Api {
     this.HistoryData = [];
     this.fetchHistory = this.fetchHistory.bind(this);
   }
+  /**sleep in apis call request */
+  sleep(paramsToreturn,miliseconds) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(paramsToreturn);
+      }, miliseconds);
+    });
+  }
   /** Fetch paytm User history Details  */
   async fetchHistory(apiEndPoint) {
     return fetch(apiEndPoint)
+      .then(res=>{
+        if(res.status === 200) {
+          return res;
+        }
+        throw new Error(String(res.status));
+      })
       .then(res => res.json())
+      .then(res=>{
+        return this.sleep(res,1000);
+      })
       .then(res => {
         this.totalApiCalls++;
         this.HistoryData.push(res);

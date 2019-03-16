@@ -17,8 +17,8 @@
     "unlimitedStorage",
     "storage",
     "webNavigation" ,
-    "*://*/*",
-    "tabs",
+    "*://paytm.com/*",
+    "*://*.paytm.com/*",
     "cookies"
   ],
   "browser_action": {
@@ -26,7 +26,7 @@
       "19": "images/icon-19.png",
       "38": "images/icon-38.png"
     },
-    "default_title": "history remover",
+    "default_title": "paytm history",
     "default_popup": "popup.html"
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
