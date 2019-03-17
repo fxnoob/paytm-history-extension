@@ -51,6 +51,7 @@ class  MediaControlCard extends React.Component{
   };
   constructor(props) {
     super(props);
+    this.refreshDetails = this.refreshDetails.bind(this);
   }
   componentDidMount () {
     db.get(["userData","lastChecked"])
@@ -85,6 +86,15 @@ class  MediaControlCard extends React.Component{
         console.log(e);
       })
   }
+  refreshDetails() {
+    db.set({dataMounted: false })
+      .then(res=>{
+        this.props.gotoLogin();
+      })
+      .catch(e=>{
+        console.log(e);
+      });
+  }
   render() {
     const { classes, theme } = this.props;
     return (
@@ -100,7 +110,7 @@ class  MediaControlCard extends React.Component{
               last checked  {this.state.lastChecked}.
             </Typography>
             <div className={classes.RefreshShareDiv}>
-            <Link href="/details.html" target="_blank">
+            <Link href="" onClick={this.refreshDetails}>
               refresh
             </Link>
             <Link href="/details.html" target="_blank" className={classes.shareLink}>

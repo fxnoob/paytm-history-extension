@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import Db  from '../../src/utils/db';
+import { Api } from "../../src/utils/api";
 
 const styles = theme => ({
   card: {
@@ -30,6 +31,7 @@ const styles = theme => ({
   },
 });
 const db = new Db();
+const api = new Api();
 
 class  MediaControlCard extends React.Component{
   state = {
@@ -40,16 +42,24 @@ class  MediaControlCard extends React.Component{
   }
   componentDidMount () {
     /** check if data was fetched previously */
-    db.get("dataMounted")
-      .then(res=>{
-        console.log(res)
-        if (res.dataMounted === true) {
-          this.setState({isDataMounted: true});
-        }
+    // db.get("dataMounted")
+    //   .then(res=>{
+    //     console.log(res)
+    //     if (res.dataMounted === true) {
+    //       this.setState({isDataMounted: true});
+    //     }
+    //   })
+    //   .catch(e=>{
+    //     console.log(e);
+    //   })
+    api.fetchTxHistory()
+      .then(res=> {
+        console.log(api.TxHistoryData);
       })
       .catch(e=>{
         console.log(e);
       })
+
   }
 
   render() {
