@@ -1,7 +1,7 @@
 import React from 'react';
 import { Nav, Site } from 'tabler-react'
 
-function header(props) {
+const header = (props) => {
   return (
     <React.Fragment>
       <Site.Header notificationsTray href="https://www.facebook.com" imageURL="images/paytm-icon.png" alt="test">

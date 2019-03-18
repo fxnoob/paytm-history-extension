@@ -1,7 +1,6 @@
-
 import React, { Component } from "react";
 import "tabler-react/dist/Tabler.css";
-import { Card, Button, Site, Nav, Header, Page,StatsCard,Grid } from "tabler-react";
+import { Card, Site, Page, Grid } from "tabler-react";
 import C3Chart from 'react-c3js';
 import 'c3/c3.css';
 import HeaderComponent from "../header";
@@ -16,6 +15,8 @@ const api = new Api();
 export default class MyCard extends Component {
   state = {
     isDataMounted: false ,
+    totalSpent: 0,
+    totalAdded: 0
   };
 
   constructor(props) {
@@ -24,12 +25,10 @@ export default class MyCard extends Component {
 
   componentDidMount () {
     /** check if data was fetched previously */
-    db.get("dataMounted")
+    db.get("userData", "userData")
       .then(res=>{
-        console.log(res)
-        if (res.dataMounted === true) {
-          this.setState({isDataMounted: true});
-        }
+        console.log("heyhey",res)
+        this.setState({totalAdded: String(res.userData.totalAdded)+"₹", totalSpent: String(res.userData.totalSpent)+"₹"});
       })
       .catch(e=>{
         console.log(e);
@@ -59,7 +58,10 @@ export default class MyCard extends Component {
           <Page.Header title="OverView" />
           <Grid.Row cards>
             {/*overview boxes*/}
-            <Overview/>
+            <Overview
+              totalSpent={this.state.totalSpent}
+              totalAdded={this.state.totalAdded}
+            />
             <Grid.Col xl={6} lg={6}>
               <Card title="Money Spent (By Year)">
                 <C3Chart data={data} />
