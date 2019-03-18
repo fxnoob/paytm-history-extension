@@ -2,21 +2,21 @@ export class Schema {
   constructor () {
     this.data = {
       /** 0: if not logged in. 1 if logged in */
-      dataMounted: false ,
+      dataMounted: false,
       /** last time when apis was hit successfully */
-      lastChecked: null ,
+      lastChecked: null,
       /** user data fetched from apis */
       userData: {
-        /**username not mandatory*/
-        userName: null ,
+        /** username not mandatory */
+        userName: null,
         /** total spent money by user based on history calculations */
-        totalSpent: 0 ,
+        totalSpent: 0,
         /** extra user details */
-        extDetails: null ,
-        /** Api's original response*/
+        extDetails: null,
+        /** Api's original response */
         apiOriginalResponse: null
       }
-    };
+    }
   }
 }
 export default class Db {
