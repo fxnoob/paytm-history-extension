@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import "tabler-react/dist/Tabler.css";
-import { Card, Button, Site, Nav } from "tabler-react";
+import { Card, Button, Site, Nav, Header, Page,StatsCard, Grid } from "tabler-react";
 import Db  from '../../src/utils/db';
 import { Api } from "../../src/utils/api";
 
@@ -16,7 +16,7 @@ export default class MyCard extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   componentDidMount () {
     /** check if data was fetched previously */
     // db.get("dataMounted")
@@ -59,6 +59,30 @@ export default class MyCard extends Component {
                 </React.Fragment>
               }
         />
+        <Page.Content>
+            <Page.Header title="OverView" />
+            <Grid.Row cards>
+                <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
+                    <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
+                </Grid.Col>
+                <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
+                    <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
+                </Grid.Col>
+                <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
+                    <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
+                </Grid.Col>
+                <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
+                    <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
+                </Grid.Col>
+                <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
+                    <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
+                </Grid.Col>
+                <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
+                    <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
+                </Grid.Col>
+            </Grid.Row>
+        </Page.Content>
+        
       </Site>
     );
   }
