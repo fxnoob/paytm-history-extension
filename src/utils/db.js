@@ -13,7 +13,15 @@ export class Schema {
         totalSpent: 0,
         /** total money added to paytm wallet by user*/
         totalAdded: 0,
-        /** extra user details */
+        /** frequent transaction to  */
+        frequentTransactionTo: "" ,
+        /** frequent transaction from  */
+        frequentTransactionFrom: "" ,
+        /** users transactions with frequency to {user: frequency}*/
+        userTxnFrequencyTo: null ,
+        /** users transactions with frequency from {user: frequency}*/
+        userTxnFrequencyFrom: null ,
+        /** extra user details  */
         extDetails: null,
         /** Api's original response */
         apiOriginalResponse: null

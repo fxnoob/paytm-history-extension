@@ -16,7 +16,9 @@ export default class MyCard extends Component {
   state = {
     isDataMounted: false ,
     totalSpent: 0,
-    totalAdded: 0
+    totalAdded: 0,
+    frequentTransactionTo: 12,
+    frequentTransactionFrom: 12
   };
 
   constructor(props) {
@@ -25,7 +27,7 @@ export default class MyCard extends Component {
 
   componentDidMount () {
     /** check if data was fetched previously */
-    db.get("userData", "userData")
+    db.get("userData")
       .then(res=>{
         console.log("heyhey",res)
         this.setState({totalAdded: String(res.userData.totalAdded)+"₹", totalSpent: String(res.userData.totalSpent)+"₹"});
@@ -61,6 +63,8 @@ export default class MyCard extends Component {
             <Overview
               totalSpent={this.state.totalSpent}
               totalAdded={this.state.totalAdded}
+              frequentTransactionTo={this.state.frequentTransactionTo}
+              frequentTransactionFrom={this.state.frequentTransactionFrom}
             />
             <Grid.Col xl={6} lg={6}>
               <Card title="Money Spent (By Year)">

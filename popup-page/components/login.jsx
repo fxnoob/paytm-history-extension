@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider'
 
 import Db  from '../../src/utils/db';
 import {Api } from "../../src/utils/api";
+import Modal from "../../src/utils/modal";
 
 const styles = theme => ({
   card: {
@@ -45,6 +46,7 @@ const styles = theme => ({
 });
 const db = new Db();
 const api = new Api();
+const modal = new Modal();
 
 class  MediaControlCard extends React.Component{
   state = {
@@ -78,20 +80,22 @@ class  MediaControlCard extends React.Component{
         setTimeout(()=>{
           this.setState({message: ""});
         },5000);
+        const transactionWithFreqTo = modal.proxy();
+        const userTxnFrequencyFrom = modal.proxy();
         const result = api.TxHistoryData.map(thd=> {
           if (thd.statusCode === "SUCCESS") {
             thd.response.map(order=> {
               if (order.txntype === "DR") {
-                  totalSpent+= order.extendedTxnInfo[0].amount;
+                transactionWithFreqTo[order.txnTo]++;
+                totalSpent+= order.extendedTxnInfo[0].amount;
               }
               else if (order.txntype === "CR") {
+                userTxnFrequencyFrom[order.txnFrom]++
                 totalAdded+= order.extendedTxnInfo[0].amount;
               }
             });
           }
         });
-        console.log(totalSpent);
-        console.log(totalAdded);
         db.set({
           /** 0: if not logged in. 1 if logged in */
           dataMounted: true,
@@ -105,6 +109,10 @@ class  MediaControlCard extends React.Component{
             totalSpent: totalSpent,
             /** total money added to paytm wallet by user*/
             totalAdded: totalAdded ,
+            /** users transactions with frequency to {user: frequency}*/
+            userTxnFrequencyTo: transactionWithFreqTo ,
+            /** users transactions with frequency from {user: frequency}*/
+            userTxnFrequencyFrom: userTxnFrequencyFrom ,
             /** extra user details */
             extDetails: null,
             /** Api's original response*/

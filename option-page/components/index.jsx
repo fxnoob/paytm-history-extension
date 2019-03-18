@@ -17,13 +17,13 @@ class  MediaControlCard extends React.Component{
     super(props);
   }
   componentDidMount () {
-    api.fetchTxHistory()
-      .then(res=> {
-        console.log(api.TxHistoryData);
-      })
-      .catch(e=>{
-        console.log(e);
-      })
+    // api.fetchTxHistory()
+    //   .then(res=> {
+    //     console.log(api.TxHistoryData);
+    //   })
+    //   .catch(e=>{
+    //     console.log(e);
+    //   })
 
   }
 
