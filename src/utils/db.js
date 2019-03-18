@@ -11,6 +11,8 @@ export class Schema {
         userName: null,
         /** total spent money by user based on history calculations */
         totalSpent: 0,
+        /** total money added to paytm wallet by user*/
+        totalAdded: 0,
         /** extra user details */
         extDetails: null,
         /** Api's original response */

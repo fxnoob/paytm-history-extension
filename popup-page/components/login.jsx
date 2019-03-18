@@ -65,10 +65,10 @@ class  MediaControlCard extends React.Component{
   }
   fetchAction() {
     this.setState({showFetchActionLabel: false,showFetchActionLoadingIcon: true , actionLabel: "fetching.."});
-    api.fetchHistory(api.historyApiEndpoint)
+    api.fetchTxHistory()
       .then(res=> {
-        let totalSpent = 0;
-        console.log(api.HistoryData);
+        let totalSpent = 0 , totalAdded = 0;
+        console.log(api.TxHistoryData);
         this.setState({
           actionLabel: "",
           showFetchActionLoadingIcon: false ,
@@ -78,12 +78,20 @@ class  MediaControlCard extends React.Component{
         setTimeout(()=>{
           this.setState({message: ""});
         },5000);
-        const result = api.HistoryData.map(hd=> {
-          hd.orders.map(order=> {
-            totalSpent+= order.amount;
-          });
+        const result = api.TxHistoryData.map(thd=> {
+          if (thd.statusCode === "SUCCESS") {
+            thd.response.map(order=> {
+              if (order.txntype === "DR") {
+                  totalSpent+= order.extendedTxnInfo[0].amount;
+              }
+              else if (order.txntype === "CR") {
+                totalAdded+= order.extendedTxnInfo[0].amount;
+              }
+            });
+          }
         });
         console.log(totalSpent);
+        console.log(totalAdded);
         db.set({
           /** 0: if not logged in. 1 if logged in */
           dataMounted: true,
@@ -95,6 +103,8 @@ class  MediaControlCard extends React.Component{
             userName: null,
             /** total spent money by user based on history calculations */
             totalSpent: totalSpent,
+            /** total money added to paytm wallet by user*/
+            totalAdded: totalAdded ,
             /** extra user details */
             extDetails: null,
             /** Api's original response*/
