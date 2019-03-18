@@ -5,6 +5,7 @@ import { Card, Button, Site, Nav, Header, Page,StatsCard,Grid } from "tabler-rea
 import C3Chart from 'react-c3js';
 import 'c3/c3.css';
 import HeaderComponent from "../header";
+import Overview from "./overview";
 
 import Db  from '../../../src/utils/db';
 import { Api } from "../../../src/utils/api";
@@ -23,19 +24,12 @@ export default class MyCard extends Component {
 
   componentDidMount () {
     /** check if data was fetched previously */
-    // db.get("dataMounted")
-    //   .then(res=>{
-    //     console.log(res)
-    //     if (res.dataMounted === true) {
-    //       this.setState({isDataMounted: true});
-    //     }
-    //   })
-    //   .catch(e=>{
-    //     console.log(e);
-    //   })
-    api.fetchTxHistory()
-      .then(res=> {
-        console.log(api.TxHistoryData);
+    db.get("dataMounted")
+      .then(res=>{
+        console.log(res)
+        if (res.dataMounted === true) {
+          this.setState({isDataMounted: true});
+        }
       })
       .catch(e=>{
         console.log(e);
@@ -64,33 +58,13 @@ export default class MyCard extends Component {
         <Page.Content>
           <Page.Header title="OverView" />
           <Grid.Row cards>
-            <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
-              <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
-            </Grid.Col>
-            <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
-              <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
-            </Grid.Col>
-            <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
-              <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
-            </Grid.Col>
-            <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
-              <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
-            </Grid.Col>
-            <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
-              <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
-            </Grid.Col>
-            <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
-              <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
-            </Grid.Col>
+            {/*overview boxes*/}
+            <Overview/>
             <Grid.Col xl={6} lg={6}>
               <Card title="Money Spent (By Year)">
-                {/* <div id="react-c3js">
-
-                    </div> */}
                 <C3Chart data={data} />
               </Card>
             </Grid.Col>
-
             <Grid.Col xl={6} lg={6}>
               <Grid.Row cards>
                 <Grid.Col xl={6} lg={6}>
@@ -98,7 +72,6 @@ export default class MyCard extends Component {
                     <C3Chart data={pie_chart_data} />
                   </Card>
                 </Grid.Col>
-
                 <Grid.Col xl={6} lg={6}>
                   <Card title="Money Spent (By Year)">
                     <C3Chart data={pie_chart_data} />
@@ -108,7 +81,6 @@ export default class MyCard extends Component {
             </Grid.Col>
           </Grid.Row>
         </Page.Content>
-
       </Site>
     );
   }
