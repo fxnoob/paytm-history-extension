@@ -1,9 +1,44 @@
+
 import React, { Component } from "react";
 import "tabler-react/dist/Tabler.css";
 import { Card, Button, Site, Nav } from "tabler-react";
 import Db  from '../../src/utils/db';
+import { Api } from "../../src/utils/api";
+
+const db = new Db();
+const api = new Api();
 
 export default class MyCard extends Component {
+  state = {
+    isDataMounted: false ,
+  };
+
+  constructor(props) {
+    super(props);
+  }
+  
+  componentDidMount () {
+    /** check if data was fetched previously */
+    // db.get("dataMounted")
+    //   .then(res=>{
+    //     console.log(res)
+    //     if (res.dataMounted === true) {
+    //       this.setState({isDataMounted: true});
+    //     }
+    //   })
+    //   .catch(e=>{
+    //     console.log(e);
+    //   })
+    api.fetchTxHistory()
+      .then(res=> {
+        console.log(api.TxHistoryData);
+      })
+      .catch(e=>{
+        console.log(e);
+      })
+
+  }
+
   render() {
     return (
       <Site>
