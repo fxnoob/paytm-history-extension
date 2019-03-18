@@ -1,35 +1,11 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route} from "react-router-dom";
 
+import Home from "./home/home";
+import About from "./about";
 import Db  from '../../src/utils/db';
 import { Api } from "../../src/utils/api";
 
-const styles = theme => ({
-  card: {
-    display: 'flex',
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-    minWidth: '200px'
-  },
-  content: {
-    flex: '1 0 auto',
-  },
-  cover: {
-    width: 151,
-  },
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-  },
-  playIcon: {
-    height: 38,
-    width: 38,
-  },
-});
 const db = new Db();
 const api = new Api();
 
@@ -41,17 +17,6 @@ class  MediaControlCard extends React.Component{
     super(props);
   }
   componentDidMount () {
-    /** check if data was fetched previously */
-    // db.get("dataMounted")
-    //   .then(res=>{
-    //     console.log(res)
-    //     if (res.dataMounted === true) {
-    //       this.setState({isDataMounted: true});
-    //     }
-    //   })
-    //   .catch(e=>{
-    //     console.log(e);
-    //   })
     api.fetchTxHistory()
       .then(res=> {
         console.log(api.TxHistoryData);
@@ -63,13 +28,13 @@ class  MediaControlCard extends React.Component{
   }
 
   render() {
-    const { classes, theme } = this.props;
     return (
-      <div>
-        hey
-      </div>
+      <Router>
+          <Route path="/option.html" exact component={Home}/>
+          <Route path="/about.html" component={About} />
+      </Router>
     );
   }
 }
 
-export default withStyles(styles, { withTheme: true })(MediaControlCard);
+export default MediaControlCard;

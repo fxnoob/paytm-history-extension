@@ -1,11 +1,11 @@
-const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
     content_script: './content-scripts/App.jsx',
     background: './src/background.js',
-    popup: './popup-page/App.jsx',
+    popup: './popup-page/App.jsx' ,
     option: './option-page/App.jsx'
   },
   module: {
@@ -17,7 +17,7 @@ module.exports = {
         options: {
           presets: ['@babel/preset-react', '@babel/preset-env']
         }
-      },
+      } ,
       {
         test: /src\.m?((js)|(jpg))$/,
         use: {
@@ -28,31 +28,45 @@ module.exports = {
         }
       },
       {
-        test: /src\.m?((js)|(jpg))$/,
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader?limit=100000'
+      },
+      {
+        test: /src\.m?((js)|ttf|eot|svg|(jpg))$/,
         use: {
           loader: 'file-loader',
           options: {
             presets: ['@babel/preset-env']
           }
         }
+      },
+      {
+        test:/\.css$/,
+        use:['style-loader','css-loader']
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
       }
-    ]
+
+    ],
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: './src/app/', force: true },
-      { from: './popup-page/popup.html', force: true }
+      { from: './src/app/', force: true } ,
+      { from: './popup-page/popup.html', force: true },
+      { from: './option-page/option.html', force: true }
     ], {})
-  ],
+  ] ,
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].bundle.js'
   },
   resolve: {
     modules: [
-      './src/data',
-      'node_modules'
+      "./src/data" ,
+      "node_modules"
     ],
-    extensions: ['.js', '.jsx', '.json', '.jpg']
+    extensions: [".js" , ".jsx",".json",".jpg",".css",".svg",".eot",".ttf",".woff"]
   }
-}
+};
