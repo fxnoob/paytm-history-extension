@@ -108,7 +108,7 @@ class  MediaControlCard extends React.Component{
             /** extra user details */
             extDetails: null,
             /** Api's original response*/
-            apiOriginalResponse: api.HistoryData
+            apiOriginalResponse: api.TxHistoryData
           }
         })
           .then((res) => {
