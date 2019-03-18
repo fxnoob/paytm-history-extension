@@ -27,21 +27,36 @@ module.exports = {
                     }
                 }
             },
+            { 
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+                loader: 'url-loader?limit=100000' 
+            },
             {
-                test: /src\.m?((js)|(jpg))$/,
+                test: /src\.m?((js)|ttf|eot|svg|(jpg))$/,
                 use: {
                     loader: 'file-loader',
                     options: {
                         presets: ['@babel/preset-env']
                     }
                 }
+            },
+            {
+                test:/\.css$/,
+                use:['style-loader','css-loader']
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader'
             }
+            
         ],
     },
+    
     plugins: [
         new CopyWebpackPlugin([
             { from: './src/app/', force: true } ,
-            { from: './popup-page/popup.html', force: true }
+            { from: './popup-page/popup.html', force: true },
+            { from: './option-page/option.html', force: true }
         ], {})
     ] ,
     output: {
@@ -53,6 +68,6 @@ module.exports = {
             "./src/data" ,
             "node_modules"
         ],
-        extensions: [".js" , ".jsx",".json",".jpg"]
+        extensions: [".js" , ".jsx",".json",".jpg",".css",".svg",".eot",".ttf",".woff"]
     }
 };
