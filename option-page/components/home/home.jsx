@@ -8,17 +8,19 @@ import Overview from "./overview";
 
 import Db  from '../../../src/utils/db';
 import { Api } from "../../../src/utils/api";
+import Modal from "../../../src/utils/modal";
 
 const db = new Db();
 const api = new Api();
+const modal = new Modal();
 
 export default class MyCard extends Component {
   state = {
     isDataMounted: false ,
     totalSpent: 0,
     totalAdded: 0,
-    frequentTransactionTo: 12,
-    frequentTransactionFrom: 12
+    frequentTransactionTo: "",
+    frequentTransactionFrom: ""
   };
 
   constructor(props) {
@@ -30,7 +32,12 @@ export default class MyCard extends Component {
     db.get("userData")
       .then(res=>{
         console.log("heyhey",res)
-        this.setState({totalAdded: String(res.userData.totalAdded)+"₹", totalSpent: String(res.userData.totalSpent)+"₹"});
+        this.setState({
+          totalAdded: String(res.userData.totalAdded)+"₹",
+          totalSpent: String(res.userData.totalSpent)+"₹",
+          frequentTransactionTo: modal.getMax(res.userData.userTxnFrequencyTo),
+          frequentTransactionFrom: modal.getMax(res.userData.userTxnFrequencyFrom)
+        });
       })
       .catch(e=>{
         console.log(e);
