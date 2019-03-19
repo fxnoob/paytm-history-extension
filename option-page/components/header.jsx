@@ -1,5 +1,6 @@
 import React from 'react';
 import { Nav, Site } from 'tabler-react'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const header = (props) => {
   return (
@@ -9,16 +10,9 @@ const header = (props) => {
       <Site.Nav
         items={
           <React.Fragment>
-            <Nav.Item hasSubNav value="Page One" icon="globe">
-              <Nav.SubItem value="Sub Item 1" />
-              <Nav.SubItem>Sub Item 2</Nav.SubItem>
-              <Nav.SubItem icon="globe">Sub Item 3</Nav.SubItem>
-            </Nav.Item>
-            <Nav.Item to="http://www.example.com">Page Two</Nav.Item>
-            <Nav.Item value="Page Three" />
-            <Nav.Item active icon="user">
-              Page Four
-            </Nav.Item>
+            <Nav.Item><Link to="/option.html">Home</Link></Nav.Item>
+            <Nav.Item><Link to="/calendar.html">Calendar View</Link></Nav.Item>
+            <Nav.Item><Link to="/about.html">About</Link></Nav.Item>
           </React.Fragment>
         }
       />

@@ -1,12 +1,14 @@
-import React from 'react'
+import React  from "react";
+import HeaderComponent from "./header";
 
-export default class About extends React.Component {
-
+export default class Calendar extends React.Component {
+  constructor (props) {
+    super(props);
+  }
+  componentDidMount () {}
   render() {
     return (
-      <div>
-        about
-      </div>
+      <HeaderComponent/>
     );
   }
 }

@@ -63,8 +63,7 @@ class  MediaControlCard extends React.Component{
     super(props);
     this.fetchAction = this.fetchAction.bind(this);
   }
-  componentDidMount () {
-  }
+  componentDidMount () {}
   fetchAction() {
     this.setState({showFetchActionLabel: false,showFetchActionLoadingIcon: true , actionLabel: "fetching.."});
     api.fetchTxHistory()

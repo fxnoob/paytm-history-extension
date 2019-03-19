@@ -31,7 +31,6 @@ export default class MyCard extends Component {
     /** check if data was fetched previously */
     db.get("userData")
       .then(res=>{
-        console.log("heyhey",res)
         this.setState({
           totalAdded: String(res.userData.totalAdded)+"₹",
           totalSpent: String(res.userData.totalSpent)+"₹",

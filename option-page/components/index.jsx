@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route} from "react-router-dom";
-
 import Home from "./home/home";
 import About from "./about";
+import Calendar from "./calendar/calendar"
+
 import Db  from '../../src/utils/db';
 import { Api } from "../../src/utils/api";
 
@@ -17,14 +18,6 @@ class  MediaControlCard extends React.Component{
     super(props);
   }
   componentDidMount () {
-    // api.fetchTxHistory()
-    //   .then(res=> {
-    //     console.log(api.TxHistoryData);
-    //   })
-    //   .catch(e=>{
-    //     console.log(e);
-    //   })
-
   }
 
   render() {
@@ -32,6 +25,7 @@ class  MediaControlCard extends React.Component{
       <Router>
           <Route path="/option.html" exact component={Home}/>
           <Route path="/about.html" component={About} />
+        <Route path="/calendar.html" component={Calendar} />
       </Router>
     );
   }
