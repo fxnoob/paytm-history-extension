@@ -8,8 +8,6 @@ import Warning from '@material-ui/icons/Warning';
 import Divider from '@material-ui/core/Divider'
 
 import Db  from '../../src/utils/db';
-import {Api } from "../../src/utils/api";
-import Modal from "../../src/utils/modal";
 
 const styles = theme => ({
   card: {
@@ -45,8 +43,6 @@ const styles = theme => ({
   },
 });
 const db = new Db();
-const api = new Api();
-const modal = new Modal();
 
 class  MediaControlCard extends React.Component{
   state = {
@@ -83,7 +79,15 @@ class  MediaControlCard extends React.Component{
         }
       }
     });
-
+    /** check if data was fetched previously just before this componentDidMount*/
+    db.get("dataMounted")
+      .then(res=>{
+        console.log(res)
+        if (res.dataMounted === true) {
+          this.props.gotoHome();
+        }
+      })
+      .catch(e=>{});
   }
   fetchAction() {
     this.port.postMessage({action: "fetchTxHistory"});
