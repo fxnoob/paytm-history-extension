@@ -1,6 +1,6 @@
 import React from 'react';
 import { Nav, Site } from 'tabler-react'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const header = (props) => {
   return (

@@ -6,7 +6,7 @@ import moment from 'moment'
 import HeaderComponent from "../header";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
+const localizer = BigCalendar.momentLocalizer(moment)
 const events =  [
   {
     id: 0,

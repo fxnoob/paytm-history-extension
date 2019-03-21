@@ -25,7 +25,9 @@ export class Schema {
         extDetails: null,
         /** Api's original response */
         apiOriginalResponse: null
-      }
+      } ,
+      /** status of  fetchTxHistory api (initiated|error|success)*/
+      fetchTxHistoryStatus: null
     }
   }
 }
