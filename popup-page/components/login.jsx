@@ -61,80 +61,33 @@ class  MediaControlCard extends React.Component{
   };
   constructor(props) {
     super(props);
+    this.port = '';
     this.fetchAction = this.fetchAction.bind(this);
   }
-  componentDidMount () {}
+
+  componentDidMount () {
+    /** https://stackoverflow.com/questions/13546778/how-to-communicate-between-popup-js-and-background-js-in-chrome-extension */
+    this.port = chrome.extension.connect({
+      name: "paytm history"
+    });
+    this.port.onMessage.addListener((response) => {
+      if (response.action === 'fetchTxHistory') {
+        if (response.status === 'initiated') {
+          this.setState({showFetchActionLabel: false,showFetchActionLoadingIcon: true , actionLabel: "fetching.."});
+        } else if (response.status === 'success') {
+          this.setState({ actionLabel: "", showFetchActionLoadingIcon: false , showFetchActionErrorIcon: false , message: "Fetched details" });
+          this.props.gotoHome();
+          setTimeout(()=>{this.setState({message: ""});},5000);
+        } else if (response.status === 'error') {
+          this.setState({ actionLabel: "Login to paytm", showFetchActionLoadingIcon: false , showFetchActionErrorIcon: true , loginLink: "https://paytm.com/", message: "Please login to paytm. first!"})
+          setTimeout(()=>{this.setState({message: ""});},5000);
+        }
+      }
+    });
+
+  }
   fetchAction() {
-    this.setState({showFetchActionLabel: false,showFetchActionLoadingIcon: true , actionLabel: "fetching.."});
-    api.fetchTxHistory()
-      .then(res=> {
-        let totalSpent = 0 , totalAdded = 0;
-        console.log(api.TxHistoryData);
-        this.setState({
-          actionLabel: "",
-          showFetchActionLoadingIcon: false ,
-          showFetchActionErrorIcon: false ,
-          message: "Fetched details"
-        });
-        setTimeout(()=>{
-          this.setState({message: ""});
-        },5000);
-        const transactionWithFreqTo = modal.proxy();
-        const userTxnFrequencyFrom = modal.proxy();
-        const result = api.TxHistoryData.map(thd=> {
-          if (thd.statusCode === "SUCCESS") {
-            thd.response.map(order=> {
-              if (order.txntype === "DR") {
-                transactionWithFreqTo[order.txnTo]++;
-                totalSpent+= order.extendedTxnInfo[0].amount;
-              }
-              else if (order.txntype === "CR") {
-                userTxnFrequencyFrom[order.txnFrom]++
-                totalAdded+= order.extendedTxnInfo[0].amount;
-              }
-            });
-          }
-        });
-        db.set({
-          /** 0: if not logged in. 1 if logged in */
-          dataMounted: true,
-          /** last time when apis was hit successfully */
-          lastChecked: +new Date,
-          /** user data fetched from apis */
-          userData: {
-            /**username not mandatory*/
-            userName: null,
-            /** total spent money by user based on history calculations */
-            totalSpent: totalSpent,
-            /** total money added to paytm wallet by user*/
-            totalAdded: totalAdded ,
-            /** users transactions with frequency to {user: frequency}*/
-            userTxnFrequencyTo: transactionWithFreqTo ,
-            /** users transactions with frequency from {user: frequency}*/
-            userTxnFrequencyFrom: userTxnFrequencyFrom ,
-            /** extra user details */
-            extDetails: null,
-            /** Api's original response*/
-            apiOriginalResponse: api.TxHistoryData
-          }
-        })
-          .then((res) => {
-            this.props.gotoHome();
-          });
-      })
-      .catch(e=>{
-          console.log("error",e);
-          this.setState({
-            actionLabel: "Login to paytm",
-            showFetchActionLoadingIcon: false ,
-            showFetchActionErrorIcon: true ,
-            loginLink: "https://paytm.com/",
-            message: "Please login to paytm. first!"
-          })
-        setTimeout(()=>{
-          this.setState({message: ""});
-        },5000);
-      });
+    this.port.postMessage({action: "fetchTxHistory"});
   }
   render() {
     const { classes, theme } = this.props;
