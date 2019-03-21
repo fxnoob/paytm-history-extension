@@ -64,6 +64,7 @@ class  MediaControlCard extends React.Component{
     this.port = '';
     this.fetchAction = this.fetchAction.bind(this);
   }
+
   componentDidMount () {
     /** https://stackoverflow.com/questions/13546778/how-to-communicate-between-popup-js-and-background-js-in-chrome-extension */
     this.port = chrome.extension.connect({
