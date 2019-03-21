@@ -37,5 +37,6 @@ chrome.extension.onConnect.addListener((port) => {
   });
 })
 
+
 /** Listen to chrome cookie changes */
 cookie.ListenToLoginCookie()
