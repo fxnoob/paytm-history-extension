@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "tabler-react/dist/Tabler.css";
-import { Card, Site, Page, Grid } from "tabler-react";
+import { Card, Page, Grid } from "tabler-react";
 import C3Chart from 'react-c3js';
 import 'c3/c3.css';
 import HeaderComponent from "../header";
@@ -60,7 +60,7 @@ export default class MyCard extends Component {
       onmouseout: function (d, i) { console.log("onmouseout", d, i); }
     }
     return (
-      <Site>
+      <React.Fragment>
         <HeaderComponent/>
         <Page.Content>
           <Page.Header title="OverView" />
@@ -93,7 +93,7 @@ export default class MyCard extends Component {
             </Grid.Col>
           </Grid.Row>
         </Page.Content>
-      </Site>
+      </React.Fragment>
     );
   }
 }

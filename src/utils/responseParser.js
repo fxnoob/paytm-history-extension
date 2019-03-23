@@ -4,6 +4,14 @@ import Modal from "./modal";
 const api = new Api()
 const modal = new Modal()
 
+const compareDate = (dString1,dString2)=>{
+  const d1 = new Date(dString1);
+  d1.setHours(0,0,0,0);
+  const d2 = new Date(dString2);
+  d2.setHours(0,0,0,0);
+  return (d1.getTime() === d2.getTime());
+}
+
 export const txnParser = async () => {
   return api.fetchTxHistory()
     .then(res=> {
@@ -51,4 +59,55 @@ export const txnParser = async () => {
         }
       };
     });
+}
+
+export const txnParserCalendarEventsInput = async (apiOriginalResponse) => {
+  const events = [];
+  let lastTxnDate= new Date();
+  let totalSpentInDay = 0;
+  const resp = {
+    id: 0,
+    title: '',
+    start: null,
+    end: new Date(2000, 1, 1),
+    total: 0
+  };
+  const result = apiOriginalResponse.map(thd=> {
+    if (thd.statusCode === "SUCCESS") {
+      thd.response.map(order=> {
+        if (order.txnStatus === "SUCCESS") {
+          if (order.txntype === "DR") {
+            if (resp.start === null) {
+              lastTxnDate=order.txndate;
+              resp.start = order.txndate;
+            }
+            if (compareDate(resp.start,order.txndate)) {
+              resp.total+=Number(order.extendedTxnInfo[0].amount);
+            } else {
+              resp.start = order.txndate;
+              resp.end = resp.start;
+              resp.total=Number(order.extendedTxnInfo[0].amount);
+              resp.title = String(resp.total )+" ₹";
+              let tempDate = new Date(resp.start);
+              tempDate.setHours(0,0,0);
+              events.push({
+                id: resp.id,
+                start: tempDate,
+                end: tempDate,
+                title: resp.title
+              });
+              resp.id++;
+              resp.total=0;
+            }
+          }
+          else if (order.txntype === "CR") {
+          }
+        }
+      });
+    }
+  });
+  return {
+    events: events,
+    lastTxnDate: lastTxnDate
+  };
 }
