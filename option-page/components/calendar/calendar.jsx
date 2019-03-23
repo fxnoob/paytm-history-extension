@@ -5,7 +5,7 @@ import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import HeaderComponent from "../header";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-
+import dates from '../../../src/utils/dates';
 const localizer = BigCalendar.momentLocalizer(moment)
 const events =  [
   {
@@ -113,13 +113,17 @@ const events =  [
     end: new Date(new Date().setHours(new Date().getHours() + 3)),
   },
 ]
+let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 const MyCalendar = props => (
   <div style={{height: '600px'}}>
     <BigCalendar
-      localizer={localizer}
       events={events}
-      startAccessor="start"
-      endAccessor="end"
+      views={allViews}
+      step={60}
+      showMultiDayTimes
+      max={dates.add(dates.endOf(new Date(2015, 17, 1), 'day'), -1, 'hours')}
+      defaultDate={new Date(2015, 3, 1)}
+      localizer={localizer}
     />
   </div>
 )

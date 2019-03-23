@@ -72,6 +72,7 @@ class  MediaControlCard extends React.Component{
           this.setState({showFetchActionLabel: false,showFetchActionLoadingIcon: true , actionLabel: "fetching.."});
         } else if (response.status === 'success') {
           this.setState({ actionLabel: "", showFetchActionLoadingIcon: false , showFetchActionErrorIcon: false , message: "Fetched details" });
+          /** goto homepage if got successful response */
           this.props.gotoHome();
           setTimeout(()=>{this.setState({message: ""});},5000);
         } else if (response.status === 'error') {
@@ -86,6 +87,14 @@ class  MediaControlCard extends React.Component{
         console.log(res)
         if (res.dataMounted === true) {
           this.props.gotoHome();
+        }
+      })
+      .catch(e=>{});
+    /** get current state of fetching */
+    db.get("fetchTxHistoryStatus")
+      .then(res=>{
+        if (res.fetchTxHistoryStatus === 'initiated') {
+          this.setState({showFetchActionLabel: false,showFetchActionLoadingIcon: true , actionLabel: "fetching.."});
         }
       })
       .catch(e=>{});
