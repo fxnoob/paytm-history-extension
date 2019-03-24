@@ -72,7 +72,7 @@ class Header extends React.Component{
     );
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" style={{color: '#828282',backgroundColor: '#ffffff'}}>
           <Toolbar>
             <IconButton onClick={this.toggleDrawer('left', true)} className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon/>
