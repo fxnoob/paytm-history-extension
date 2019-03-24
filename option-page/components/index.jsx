@@ -10,7 +10,7 @@ import { Api } from "../../src/utils/api";
 const db = new Db();
 const api = new Api();
 
-class  MediaControlCard extends React.Component{
+class  Index extends React.Component{
   state = {
     isDataMounted: false ,
   };
@@ -31,4 +31,4 @@ class  MediaControlCard extends React.Component{
   }
 }
 
-export default MediaControlCard;
+export default Index;
