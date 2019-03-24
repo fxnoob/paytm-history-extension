@@ -104,7 +104,7 @@ class  MediaControlCard extends React.Component{
               Paytm History
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              Rs.{this.state.spentMoney} spent.
+              {Math.round(this.state.spentMoney)}  ₹ spent.
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" style={{fontSize:'inherit'}}>
               last checked  {this.state.lastChecked}.
