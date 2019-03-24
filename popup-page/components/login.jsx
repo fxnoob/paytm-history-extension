@@ -8,8 +8,6 @@ import Warning from '@material-ui/icons/Warning';
 import Divider from '@material-ui/core/Divider'
 
 import Db  from '../../src/utils/db';
-import {Api } from "../../src/utils/api";
-import Modal from "../../src/utils/modal";
 
 const styles = theme => ({
   card: {
@@ -45,8 +43,6 @@ const styles = theme => ({
   },
 });
 const db = new Db();
-const api = new Api();
-const modal = new Modal();
 
 class  MediaControlCard extends React.Component{
   state = {
@@ -76,6 +72,7 @@ class  MediaControlCard extends React.Component{
           this.setState({showFetchActionLabel: false,showFetchActionLoadingIcon: true , actionLabel: "fetching.."});
         } else if (response.status === 'success') {
           this.setState({ actionLabel: "", showFetchActionLoadingIcon: false , showFetchActionErrorIcon: false , message: "Fetched details" });
+          /** goto homepage if got successful response */
           this.props.gotoHome();
           setTimeout(()=>{this.setState({message: ""});},5000);
         } else if (response.status === 'error') {
@@ -84,7 +81,23 @@ class  MediaControlCard extends React.Component{
         }
       }
     });
-
+    /** check if data was fetched previously just before this componentDidMount*/
+    db.get("dataMounted")
+      .then(res=>{
+        console.log(res)
+        if (res.dataMounted === true) {
+          this.props.gotoHome();
+        }
+      })
+      .catch(e=>{});
+    /** get current state of fetching */
+    db.get("fetchTxHistoryStatus")
+      .then(res=>{
+        if (res.fetchTxHistoryStatus === 'initiated') {
+          this.setState({showFetchActionLabel: false,showFetchActionLoadingIcon: true , actionLabel: "fetching.."});
+        }
+      })
+      .catch(e=>{});
   }
   fetchAction() {
     this.port.postMessage({action: "fetchTxHistory"});
