@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import Divider  from '@material-ui/core/Divider'
 import HeaderComponent from "../header";
 import Overview from "./overview";
+import Charts from "./charts";
 
 import Db  from '../../../src/utils/db';
 import { Api } from "../../../src/utils/api";
@@ -50,6 +52,8 @@ export default class Home extends Component {
           frequentTransactionTo={this.state.frequentTransactionTo}
           frequentTransactionFrom={this.state.frequentTransactionFrom}
         />
+        {/*basic charts*/}
+        <Charts/>
       </React.Fragment>
     );
   }

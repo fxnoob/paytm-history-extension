@@ -3,13 +3,13 @@ import moment from 'moment'
 import BigCalendar from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import Divider from '@material-ui/core/Divider'
 import HeaderComponent from "../header";
 import dates from '../../../src/utils/dates';
 import dB from '../../../src/utils/db';
 import { txnParserCalendarEventsInput } from '../../../src/utils/responseParser';
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import Divider from '@material-ui/core/Divider'
 
 const db = new dB();
 const localizer = BigCalendar.momentLocalizer(moment)

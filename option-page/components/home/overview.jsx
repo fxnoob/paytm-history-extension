@@ -13,7 +13,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
   },
   title:{
-    marginLeft: theme.spacing.unit * 4,
+    marginLeft: theme.spacing.unit * 2,
   },
   content:{
     marginRight: theme.spacing.unit ,

@@ -54,7 +54,9 @@ class Header extends React.Component{
             </Typography>
           </ListItem>
           <ListItem button>
-            <Link to="/option.html">Home</Link>
+            <Button variant="outlined" color="secondary" className={classes.button}>
+              <Link to="/option.html">Home</Link>
+            </Button>
           </ListItem>
           <Divider/>
           <ListItem button>
