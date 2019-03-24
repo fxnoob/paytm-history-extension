@@ -7,8 +7,9 @@ import HeaderComponent from "../header";
 import dates from '../../../src/utils/dates';
 import dB from '../../../src/utils/db';
 import { txnParserCalendarEventsInput } from '../../../src/utils/responseParser';
-import Typography from '../home/overview'
+import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
+import Divider from '@material-ui/core/Divider'
 
 const db = new dB();
 const localizer = BigCalendar.momentLocalizer(moment)
@@ -16,13 +17,11 @@ let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
 const styles = theme => ({
   title:{
-    marginLeft: theme.spacing.unit * 4,
-  },
-  paper: {
-    padding: theme.spacing.unit * 1,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
+    flexGrow: 1,
+    marginRight: theme.spacing.unit* 2 ,
+    marginLeft: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2,
+  }
 });
 
 const MyCalendar = props => (
@@ -60,15 +59,23 @@ class Calendar extends React.Component {
       })
   }
   render() {
+    const { classes } = this.props;
     return (
       <React.Fragment>
         <HeaderComponent />
-        <Grid container spacing={24} xs={12}  className={classes.title}>
-          <Typography component="h2" variant="display1" gutterBottom>
-            Calendar view
-          </Typography>
-          <MyCalendar events={this.state.events} lastTxnDate={this.state.lastTxnDate}/>
-        </Grid>
+        <div className={classes.title}>
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <Typography component="h2" variant="display1" gutterBottom>
+                Calendar view
+              </Typography>
+            </Grid>
+            <Divider/>
+            <Grid item xs={12}>
+              <MyCalendar events={this.state.events} lastTxnDate={this.state.lastTxnDate}/>
+            </Grid>
+          </Grid>
+        </div>
       </React.Fragment>
       );
   }
