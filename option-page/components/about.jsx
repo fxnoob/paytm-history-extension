@@ -1,7 +1,7 @@
 import React  from "react";
 import HeaderComponent from "./header";
 
-export default class Calendar extends React.Component {
+export default class About extends React.Component {
   constructor (props) {
     super(props);
   }

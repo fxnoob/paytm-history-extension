@@ -3,75 +3,99 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
 import { Link } from "react-router-dom";
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider'
 
 const styles = {
   root: {
     flexGrow: 1,
   },
-  container: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(12, 1fr)'
+  list: {
+    width: 250,
   },
-  paper: {
-    textAlign: 'center',
-    whiteSpace: 'nowrap',
-  }
+  fullList: {
+    width: 'auto',
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
 };
-const SimpleAppBar = (props) => {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static" color="default" style={{boxShadow: 'none' }}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit">
-            Paytm History
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+
+class Header extends React.Component{
+  state = {
+    left: false
+  };
+  constructor (props) {
+    super(props);
+  }
+  toggleDrawer = (side, open) => () => {
+    this.setState({
+      [side]: open,
+    });
+  };
+  render() {
+    const { classes } = this.props;
+    const sideList = (
+      <div className={classes.list}>
+        <List>
+          <ListItem button>
+            <Typography variant="h6" color="inherit" className={classes.grow}>
+             Quick Links
+            </Typography>
+          </ListItem>
+          <ListItem button>
+            <Button variant="outlined" color="secondary" className={classes.button}>
+              <Link to="/option.html">Home</Link>
+            </Button>
+          </ListItem>
+          <Divider/>
+          <ListItem button>
+            <Link to="/calendar.html">Calendar View</Link>
+          </ListItem>
+          <Divider/>
+          <ListItem button>
+            <Link to="/about.html">About</Link>
+          </ListItem>
+          <Divider/>
+        </List>
+      </div>
+    );
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton onClick={this.toggleDrawer('left', true)} className={classes.menuButton} color="inherit" aria-label="Menu">
+              <MenuIcon/>
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={classes.grow}>
+              Paytm History
+            </Typography>
+            <Button color="inherit">Refresh</Button>
+          </Toolbar>
+        </AppBar>
+        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+          <div
+            tabIndex={0}
+            role="button"
+            onClick={this.toggleDrawer('left', false)}
+            onKeyDown={this.toggleDrawer('left', false)}
+          >
+            {sideList}
+          </div>
+        </Drawer>
+      </div>
+    );
+  }
 }
 
-const header = (props) => {
-  const classes =  props.classes;
-  return (
-    <React.Fragment>
-      <SimpleAppBar {...props}/>
-      <Grid container>
-        <Grid item xs={1}>
-
-        </Grid>
-        <Grid item xs={1}>
-          <Link to="/option.html">Home</Link>
-        </Grid>
-        <Grid item xs={1}>
-          <Link to="/calendar.html">Calendar View</Link>
-        </Grid>
-        <Grid item xs={1}>
-          <Link to="/about.html">About</Link>
-        </Grid>
-        <Grid item xs={1}>
-
-        </Grid>
-        <Grid item xs={1}>
-
-        </Grid>
-        <Grid item xs={1}>
-
-        </Grid>
-        <Grid item xs={1}>
-
-        </Grid>
-        <Grid item xs={1}>
-
-        </Grid>
-        <Grid item xs={3}>
-        </Grid>
-      </Grid>
-    </React.Fragment>
-  );
-}
-
-export default withStyles(styles)(header);
+export default withStyles(styles)(Header);
