@@ -26,10 +26,10 @@ export default class Overview extends Component {
           <StatsCard layout={1} movement=""  total={frequentTransactionFrom} label="Freq. transaction fr." />
         </Grid.Col>
         <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
-          <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
+          <StatsCard layout={1} movement=""  total="∞" label="Coming soon.." />
         </Grid.Col>
         <Grid.Col xl={2} lg={2} md={4} sm={6} xs={12}>
-          <StatsCard layout={1} movement={-3}  total="17" label="Phone Recharge" />
+          <StatsCard layout={1} movement=""  total="∞" label="Coming soon.." />
         </Grid.Col>
       </React.Fragment>
     );
