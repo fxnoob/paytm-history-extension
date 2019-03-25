@@ -3,6 +3,8 @@ import { BarChart } from "reaviz";
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import Button from '@material-ui/core/Button'
 
 import Db  from '../../../src/utils/db';
 import { Api } from "../../../src/utils/api";
@@ -23,6 +25,12 @@ const styles = theme => ({
     marginRight: theme.spacing.unit* 2 ,
     marginLeft: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 2,
+  },
+  button: {
+    color: 'rgb(130, 130, 130)',
+    backgroundColor: '#ffffff',
+    marginBottom: theme.spacing.unit*3,
+    marginTop: theme.spacing.unit * 3,
   },
   title:{
     marginLeft: theme.spacing.unit * 2,
@@ -63,11 +71,13 @@ class Charts extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
+        <Divider/>
         <Grid container spacing={24}  className={classes.title}>
-          <Typography component="h2" variant="display1" gutterBottom>
-            Chart visualization
-          </Typography>
+          <Button variant="contained" className={classes.button}>
+            select year
+          </Button>
         </Grid>
+        <Divider/>
         <BarChart width={350} height={250} data={data} />
       </div>
     );

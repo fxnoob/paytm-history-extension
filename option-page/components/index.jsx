@@ -25,7 +25,7 @@ class  Index extends React.Component{
       <Router>
           <Route path="/option.html" exact component={Home}/>
           <Route path="/about.html" component={About} />
-        <Route path="/calendar.html" component={Calendar} />
+          <Route path="/calendar.html" component={Calendar} />
       </Router>
     );
   }

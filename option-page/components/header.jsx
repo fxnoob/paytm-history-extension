@@ -24,6 +24,10 @@ const styles = {
   },
   grow: {
     flexGrow: 1,
+    textAlign: 'center'
+  },
+  button: {
+    width: '100%'
   },
   menuButton: {
     marginLeft: -12,
@@ -60,11 +64,15 @@ class Header extends React.Component{
           </ListItem>
           <Divider/>
           <ListItem button>
-            <Link to="/calendar.html">Calendar View</Link>
+            <Button variant="outlined" color="secondary" className={classes.button}>
+              <Link to="/calendar.html">Calendar View</Link>
+            </Button>
           </ListItem>
           <Divider/>
           <ListItem button>
-            <Link to="/about.html">About</Link>
+            <Button variant="outlined" color="secondary" className={classes.button}>
+              <Link to="/about.html">About</Link>
+            </Button>
           </ListItem>
           <Divider/>
         </List>
