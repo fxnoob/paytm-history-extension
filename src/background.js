@@ -30,7 +30,8 @@ chrome.extension.onConnect.addListener((port) => {
           await db.set({fetchTxHistoryStatus: "success", ...res});
           port.postMessage({action: 'fetchTxHistory', status: 'success',response: res});
         })
-        .catch(e=>{
+        .catch(async e=>{
+          await db.set({fetchTxHistoryStatus: "error"});
           port.postMessage({action: 'fetchTxHistory', status: 'error',response: e});
         });
     }

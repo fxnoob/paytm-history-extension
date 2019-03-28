@@ -18,7 +18,9 @@ export default class Home extends Component {
     totalSpent: 0,
     totalAdded: 0,
     frequentTransactionTo: "",
-    frequentTransactionFrom: ""
+    frequentTransactionFrom: "",
+    showChart: false,
+    statData: null
   };
 
   constructor(props) {
@@ -27,14 +29,21 @@ export default class Home extends Component {
 
   componentDidMount () {
     /** check if data was fetched previously */
-    db.get("userData")
+    db.get(["userData","stats"])
       .then(res=>{
         this.setState({
           totalAdded: String(res.userData.totalAdded),
           totalSpent: String(res.userData.totalSpent),
           frequentTransactionTo: modal.getMax(res.userData.userTxnFrequencyTo),
-          frequentTransactionFrom: modal.getMax(res.userData.userTxnFrequencyFrom)
+          frequentTransactionFrom: modal.getMax(res.userData.userTxnFrequencyFrom),
+          statData: res.stats
         });
+      })
+      .then(res=>{
+        api.sleep(null,5000);
+      })
+      .then(res=>{
+        this.setState({showChart: true});
       })
       .catch(e=>{
         console.log(e);
@@ -53,7 +62,7 @@ export default class Home extends Component {
           frequentTransactionFrom={this.state.frequentTransactionFrom}
         />
         {/*basic charts*/}
-        <Charts/>
+        {this.state.showChart?<Charts data={this.state.statData}/>:""}
       </React.Fragment>
     );
   }

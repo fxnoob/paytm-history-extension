@@ -1,23 +1,17 @@
 import React, { Component } from "react";
-import { BarChart } from "reaviz";
+import "react-vis/dist/style";
+/** https://github.com/uber/react-vis */
+import {XYPlot, XAxis, YAxis, HorizontalGridLines,LabelSeries,LineSeries,VerticalBarSeries,ChartLabel} from 'react-vis';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
-
-import Db  from '../../../src/utils/db';
-import { Api } from "../../../src/utils/api";
-import Modal from "../../../src/utils/modal";
-
-const db = new Db();
-const api = new Api();
-const modal = new Modal();
+import  Typography from '@material-ui/core/Typography'
 
 const data = [
-  { key: 'IDS', data: 1000 },
-  { key: 'Malware', data: 5 },
-  { key: 'DLP', data: 18 }
+  {x: 1, y: 10},
+  {x: 2, y: 5},
+  {x: 3, y: 15}
 ];
 const styles = theme => ({
   root: {
@@ -31,6 +25,7 @@ const styles = theme => ({
     backgroundColor: '#ffffff',
     marginBottom: theme.spacing.unit*3,
     marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit ,
   },
   title:{
     marginLeft: theme.spacing.unit * 2,
@@ -51,21 +46,32 @@ class Charts extends Component {
     totalSpent: 0,
     totalAdded: 0,
     frequentTransactionTo: "",
-    frequentTransactionFrom: ""
+    frequentTransactionFrom: "",
+    graphData1: null,
+    barGraphdata1: []
   };
 
   constructor(props) {
     super(props);
+    this.changeYear = this.changeYear.bind(this);
   }
   componentDidMount () {
-    /** check if data was fetched previously */
-    db.get("userData")
-      .then(res=>{
-
-      })
-      .catch(e=>{
-        console.log(e);
-      })
+    /**get stats data from props */
+    const stats = this.props.data;
+    this.setState({graphData1: stats})
+  }
+  changeYear(year) {
+    const data = this.props.data;
+    const response = Object.entries(data[year]).map(point=>{
+      return {
+        x: Number(point[0]),
+        y: point[1],
+        label: String(Math.round(point[1])) + '₹',
+        rotation: 270
+      }
+    })
+    console.log(response);
+    this.setState({barGraphdata1: response})
   }
   render() {
     const { classes } = this.props;
@@ -73,12 +79,46 @@ class Charts extends Component {
       <div className={classes.root}>
         <Divider/>
         <Grid container spacing={24}  className={classes.title}>
-          <Button variant="contained" className={classes.button}>
-            select year
-          </Button>
+          {this.state.graphData1 && Object.keys(this.state.graphData1).map(year=>{
+            return (
+              <Button key={year} variant="contained" onClick={()=>{this.changeYear(year)}} className={classes.button}>
+                {year}
+              </Button>
+            );
+          })}
         </Grid>
-        <Divider/>
-        <BarChart width={350} height={250} data={data} />
+        <XYPlot
+          width={500}
+          height={300}>
+          <HorizontalGridLines />
+          <LabelSeries
+            animation
+            allowOffsetToBeReversed
+            data={this.state.barGraphdata1} />
+          <VerticalBarSeries data={this.state.barGraphdata1} />
+          <LineSeries
+            data={this.state.barGraphdata1}/>
+          <XAxis />
+          <YAxis />
+          <ChartLabel
+            text="months"
+            className="alt-x-label"
+            includeMargin={false}
+            xPercent={0.025}
+            yPercent={1.01}
+          />
+          <ChartLabel
+            text="Spent money"
+            className="alt-y-label"
+            includeMargin={false}
+            xPercent={0.06}
+            yPercent={0.06}
+            style={{
+              transform: 'rotate(-90)',
+              textAnchor: 'end'
+            }}
+          />
+        </XYPlot>
       </div>
     );
   }
