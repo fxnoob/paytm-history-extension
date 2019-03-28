@@ -87,38 +87,110 @@ class Charts extends Component {
             );
           })}
         </Grid>
-        <XYPlot
-          width={500}
-          height={300}>
-          <HorizontalGridLines />
-          <LabelSeries
-            animation
-            allowOffsetToBeReversed
-            data={this.state.barGraphdata1} />
-          <VerticalBarSeries data={this.state.barGraphdata1} />
-          <LineSeries
-            data={this.state.barGraphdata1}/>
-          <XAxis />
-          <YAxis />
-          <ChartLabel
-            text="months"
-            className="alt-x-label"
-            includeMargin={false}
-            xPercent={0.025}
-            yPercent={1.01}
-          />
-          <ChartLabel
-            text="Spent money"
-            className="alt-y-label"
-            includeMargin={false}
-            xPercent={0.06}
-            yPercent={0.06}
-            style={{
-              transform: 'rotate(-90)',
-              textAnchor: 'end'
-            }}
-          />
-        </XYPlot>
+        <Grid container spacing={24}  className={classes.title}>
+          <Grid item xs={4}>
+            <XYPlot
+              width={400}
+              height={300}>
+              <HorizontalGridLines />
+              <LabelSeries
+                animation
+                allowOffsetToBeReversed
+                data={this.state.barGraphdata1} />
+              <VerticalBarSeries data={this.state.barGraphdata1} />
+              <LineSeries
+                data={this.state.barGraphdata1}/>
+              <XAxis />
+              <YAxis />
+              <ChartLabel
+                text="months"
+                className="alt-x-label"
+                includeMargin={false}
+                xPercent={0.025}
+                yPercent={1.01}
+              />
+              <ChartLabel
+                text="Spent money"
+                className="alt-y-label"
+                includeMargin={false}
+                xPercent={0.06}
+                yPercent={0.06}
+                style={{
+                  transform: 'rotate(-90)',
+                  textAnchor: 'end'
+                }}
+              />
+            </XYPlot>
+          </Grid>
+          <Grid item xs={4}>
+            <XYPlot
+              width={400}
+              height={300}>
+              <HorizontalGridLines />
+              <LabelSeries
+                animation
+                allowOffsetToBeReversed
+                data={this.state.barGraphdata1} />
+              <VerticalBarSeries data={this.state.barGraphdata1} />
+              <LineSeries
+                data={this.state.barGraphdata1}/>
+              <XAxis />
+              <YAxis />
+              <ChartLabel
+                text="months"
+                className="alt-x-label"
+                includeMargin={false}
+                xPercent={0.025}
+                yPercent={1.01}
+              />
+              <ChartLabel
+                text="Spent money"
+                className="alt-y-label"
+                includeMargin={false}
+                xPercent={0.06}
+                yPercent={0.06}
+                style={{
+                  transform: 'rotate(-90)',
+                  textAnchor: 'end'
+                }}
+              />
+            </XYPlot>
+          </Grid>
+          <Grid item xs={4}>
+            <XYPlot
+              width={400}
+              height={300}>
+              <HorizontalGridLines />
+              <LabelSeries
+                animation
+                allowOffsetToBeReversed
+                data={this.state.barGraphdata1} />
+              <VerticalBarSeries data={this.state.barGraphdata1} />
+              <LineSeries
+                data={this.state.barGraphdata1}/>
+              <XAxis />
+              <YAxis />
+              <ChartLabel
+                text="months"
+                className="alt-x-label"
+                includeMargin={false}
+                xPercent={0.025}
+                yPercent={1.01}
+              />
+              <ChartLabel
+                text="Spent money"
+                className="alt-y-label"
+                includeMargin={false}
+                xPercent={0.06}
+                yPercent={0.06}
+                style={{
+                  transform: 'rotate(-90)',
+                  textAnchor: 'end'
+                }}
+              />
+            </XYPlot>
+          </Grid>
+        </Grid>
       </div>
     );
   }
