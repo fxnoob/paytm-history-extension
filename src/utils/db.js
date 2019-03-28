@@ -27,7 +27,13 @@ export class Schema {
         apiOriginalResponse: null
       } ,
       /** status of  fetchTxHistory api (initiated|error|success)*/
-      fetchTxHistoryStatus: null
+      fetchTxHistoryStatus: null,
+      /** monthly analysis calculations */
+      stats: {
+        monthlySpent: null,
+        monthlyAdded: null,
+        monthlyTransfer: null
+      }
     }
   }
 }

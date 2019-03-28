@@ -54,7 +54,7 @@ class  MediaControlCard extends React.Component{
     this.refreshDetails = this.refreshDetails.bind(this);
   }
   componentDidMount () {
-    db.get(["userData","lastChecked"])
+    db.get(["userData","lastChecked","stats"])
       .then(res=> {
         console.log(res);
         const currDate = +new Date;

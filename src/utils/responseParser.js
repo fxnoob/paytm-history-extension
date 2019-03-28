@@ -1,3 +1,4 @@
+import * as dayjs from 'dayjs'
 import { Api } from './api';
 import Modal from "./modal";
 
@@ -17,6 +18,7 @@ export const txnParser = async () => {
     .then(res=> {
       let totalSpent = 0 , totalAdded = 0;
       console.log(api.TxHistoryData);
+      const dateDataMonthlySpent = modal.dateProxy();
       const transactionWithFreqTo = modal.proxy();
       const userTxnFrequencyFrom = modal.proxy();
       const result = api.TxHistoryData.map(thd=> {
@@ -26,6 +28,9 @@ export const txnParser = async () => {
               if (order.txntype === "DR") {
                 transactionWithFreqTo[order.txnTo]++;
                 totalSpent+= order.extendedTxnInfo[0].amount;
+                let dayJsCalculation = dayjs(order.txndate);
+                /** add spent money monthly wise in dateDataMonthlySpent to further show on graph */
+                dateDataMonthlySpent[dayJsCalculation.year()][dayJsCalculation.month()]+= order.extendedTxnInfo[0].amount;
               }
               else if (order.txntype === "CR") {
                 userTxnFrequencyFrom[order.txnFrom]++
@@ -35,6 +40,7 @@ export const txnParser = async () => {
           });
         }
       });
+      console.log("dateDataMonthlySpent",dateDataMonthlySpent);
       return {
         /** 0: if not logged in. 1 if logged in */
         dataMounted: true,
@@ -56,7 +62,9 @@ export const txnParser = async () => {
           extDetails: null,
           /** Api's original response*/
           apiOriginalResponse: api.TxHistoryData
-        }
+        },
+        /** monthly analysis calculations */
+        stats: dateDataMonthlySpent
       };
     });
 }

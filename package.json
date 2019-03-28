@@ -44,6 +44,7 @@
     "@material-ui/core": "^3.9.0",
     "@material-ui/icons": "^3.0.2",
     "babel-core": "^7.0.0-bridge.0",
+    "dayjs": "^1.8.11",
     "dotenv": "^6.2.0",
     "moment": "^2.24.0",
     "prop-types": "^15.6.2",
@@ -53,7 +54,7 @@
     "react-hot-loader": "^4.6.3",
     "react-router": "^4.4.0",
     "react-router-dom": "^5.0.0",
-    "reaviz": "^1.0.2",
+    "react-vis": "^1.11.6",
     "webpack-notifier": "^1.7.0"
   }
 }

@@ -13,6 +13,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
   },
   title:{
+    opacity: 0,
     marginLeft: theme.spacing.unit * 2,
   },
   content:{
@@ -25,9 +26,9 @@ const styles = theme => ({
   },
 });
 class Overview extends React.Component {
+
   render() {
     const { classes, totalSpent , totalAdded, frequentTransactionTo, frequentTransactionFrom  } = this.props;
-
     return (
       <div className={classes.root}>
         <Grid container spacing={24}  className={classes.title}>
@@ -60,7 +61,7 @@ class Overview extends React.Component {
           <Grid item xs={2}>
             <Paper className={classes.paper}>
               <Typography component="h2" variant="display1" gutterBottom>
-                {frequentTransactionFrom}
+                {frequentTransactionFrom?frequentTransactionFrom:'∞'}
               </Typography>
               <Typography variant="caption" gutterBottom align="center">
                 Frequent transaction from
@@ -70,7 +71,7 @@ class Overview extends React.Component {
           <Grid item xs={2}>
             <Paper className={classes.paper}>
               <Typography component="h2" variant="display1" gutterBottom>
-                {frequentTransactionTo}
+                {frequentTransactionTo?frequentTransactionTo:'∞'}
               </Typography>
               <Typography variant="caption" gutterBottom align="center">
                 Frequent transaction to
