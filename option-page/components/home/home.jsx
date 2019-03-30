@@ -17,10 +17,11 @@ export default class Home extends Component {
     isDataMounted: false ,
     totalSpent: 0,
     totalAdded: 0,
-    frequentTransactionTo: "",
-    frequentTransactionFrom: "",
+    frequentTransactionTo: [],
+    frequentTransactionFrom: [],
     showChart: false,
-    statData: null
+    statData: null,
+    userData: null,
   };
 
   constructor(props) {
@@ -32,15 +33,16 @@ export default class Home extends Component {
     db.get(["userData","stats"])
       .then(res=>{
         this.setState({
+          userData: res.userData,
           totalAdded: String(res.userData.totalAdded),
           totalSpent: String(res.userData.totalSpent),
-          frequentTransactionTo: modal.getMax(res.userData.userTxnFrequencyTo),
-          frequentTransactionFrom: modal.getMax(res.userData.userTxnFrequencyFrom),
+          frequentTransactionTo: res.userData.userTxnFrequencyTo ,
+          frequentTransactionFrom: res.userData.userTxnFrequencyFrom,
           statData: res.stats
         });
       })
       .then(res=>{
-        api.sleep(null,5000);
+        return api.sleep(null,1000);
       })
       .then(res=>{
         this.setState({showChart: true});
@@ -60,6 +62,7 @@ export default class Home extends Component {
           totalAdded={this.state.totalAdded}
           frequentTransactionTo={this.state.frequentTransactionTo}
           frequentTransactionFrom={this.state.frequentTransactionFrom}
+          userData={this.state.userData}
         />
         {/*basic charts*/}
         {this.state.showChart?<Charts data={this.state.statData}/>:""}
