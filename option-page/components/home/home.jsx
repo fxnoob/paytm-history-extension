@@ -20,7 +20,8 @@ export default class Home extends Component {
     frequentTransactionTo: [],
     frequentTransactionFrom: [],
     showChart: false,
-    statData: null
+    statData: null,
+    userData: null,
   };
 
   constructor(props) {
@@ -32,6 +33,7 @@ export default class Home extends Component {
     db.get(["userData","stats"])
       .then(res=>{
         this.setState({
+          userData: res.userData,
           totalAdded: String(res.userData.totalAdded),
           totalSpent: String(res.userData.totalSpent),
           frequentTransactionTo: res.userData.userTxnFrequencyTo ,
@@ -60,6 +62,7 @@ export default class Home extends Component {
           totalAdded={this.state.totalAdded}
           frequentTransactionTo={this.state.frequentTransactionTo}
           frequentTransactionFrom={this.state.frequentTransactionFrom}
+          userData={this.state.userData}
         />
         {/*basic charts*/}
         {this.state.showChart?<Charts data={this.state.statData}/>:""}

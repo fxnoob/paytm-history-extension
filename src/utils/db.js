@@ -24,7 +24,11 @@ export class Schema {
         /** extra user details  */
         extDetails: null,
         /** Api's original response */
-        apiOriginalResponse: null
+        apiOriginalResponse: null,
+        /**structure for spent money datatable */
+        spentMoneyDataTable: [['','','','','','','']],
+        /**structure for added money datatable */
+        addedMoneyDataTable: [['','','','','','','']]
       } ,
       /** status of  fetchTxHistory api (initiated|error|success)*/
       fetchTxHistoryStatus: null,

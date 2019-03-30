@@ -21,6 +21,8 @@ export const txnParser = async () => {
       const dateDataMonthlySpent = modal.dateProxy();
       const transactionWithFreqTo = modal.proxy();
       const userTxnFrequencyFrom = modal.proxy();
+      const spentMoneyDataTable = [];
+      const addedMoneyDataTable = [];
       const result = api.TxHistoryData.map(thd=> {
         if (thd.statusCode === "SUCCESS") {
           thd.response.map(order=> {
@@ -31,16 +33,35 @@ export const txnParser = async () => {
                 let dayJsCalculation = dayjs(order.txndate);
                 /** add spent money monthly wise in dateDataMonthlySpent to further show on graph */
                 dateDataMonthlySpent[dayJsCalculation.year()][dayJsCalculation.month()]+= order.extendedTxnInfo[0].amount;
+                /** spent money datatable ds */
+                spentMoneyDataTable.push([
+                  order.extendedTxnInfo[0].amount,
+                  order.txnFrom,
+                  order.txnTo,
+                  order.textForShare,
+                  order.mode,
+                  order.extendedTxnInfo[0].closingBalance,
+                  order.txndate
+                ]);
               }
               else if (order.txntype === "CR") {
                 userTxnFrequencyFrom[order.txnFrom]++
                 totalAdded+= order.extendedTxnInfo[0].amount;
+                /** added money datatable ds */
+                addedMoneyDataTable.push([
+                  order.extendedTxnInfo[0].amount,
+                  order.txnFrom,
+                  order.txnTo,
+                  order.textForShare,
+                  order.mode,
+                  order.extendedTxnInfo[0].closingBalance,
+                  order.txndate
+                ]);
               }
             }
           });
         }
       });
-      console.log("dateDataMonthlySpent",dateDataMonthlySpent);
       return {
         /** 0: if not logged in. 1 if logged in */
         dataMounted: true,
@@ -61,7 +82,11 @@ export const txnParser = async () => {
           /** extra user details */
           extDetails: null,
           /** Api's original response*/
-          apiOriginalResponse: api.TxHistoryData
+          apiOriginalResponse: api.TxHistoryData,
+          /**structure for spent money datatable */
+          spentMoneyDataTable: spentMoneyDataTable,
+          /**structure for added money datatable */
+          addedMoneyDataTable: addedMoneyDataTable
         },
         /** monthly analysis calculations */
         stats: dateDataMonthlySpent

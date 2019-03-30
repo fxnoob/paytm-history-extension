@@ -1,4 +1,5 @@
 import React from 'react';
+import MUIDataTable from "mui-datatables";
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -10,7 +11,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-
 import Modal from "../../../src/utils/modal";
 
 const modal = new Modal();
@@ -35,6 +35,19 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
   },
 });
+const columns = ["Amount" ,"Transaction from","Transaction to","Description", "Mode", "Closing balance","Transaction date"];
+
+const data = [
+  ["Joe James", "Test Corp", "Yonkers", "NY","Joe James", "Test Corp", "Yonkers", "NY"],
+  ["John Walsh", "Test Corp", "Hartford", "CT","Joe James", "Test Corp", "Yonkers", "NY"],
+  ["Bob Herm", "Test Corp", "Tampa", "FL","Joe James", "Test Corp", "Yonkers", "NY"],
+  ["James Houston", "Test Corp", "Dallas", "TX","Joe James", "Test Corp", "Yonkers", "NY"],
+];
+
+const options = {
+  filterType: 'checkbox',
+};
+
 class Overview extends React.Component {
   state = {
     totalSpent: 0,
@@ -48,7 +61,16 @@ class Overview extends React.Component {
     frequentTransactiofromData: [],
     frequentTransactiotoDataPlot: [],
     frequentTransactiofromDataPlot: [],
+    dataTablePanelOpen: false,
+    spentMoneyDataTable: [],
+    addedMoneyDataTable: [],
+    userData: null,
+    datatableDataToShow: [['','','','','','','']],
   };
+  constructor(props) {
+    super(props)
+    this.handledataTableClose = this.handledataTableClose.bind(this)
+  }
   componentDidMount () {
     const { totalSpent , totalAdded, frequentTransactionTo, frequentTransactionFrom  } = this.props;
     console.log(frequentTransactionTo);
@@ -62,7 +84,7 @@ class Overview extends React.Component {
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps', nextProps);
     if (this.props !== nextProps) {
-      const { totalSpent,totalAdded,frequentTransactionTo,frequentTransactionFrom } = nextProps;
+      const { totalSpent,totalAdded,frequentTransactionTo,frequentTransactionFrom,userData } = nextProps;
       this.setState({
         totalSpent: totalSpent,
         totalAdded: totalAdded,
@@ -70,6 +92,7 @@ class Overview extends React.Component {
         frequentTransactionFrom: modal.getMax(frequentTransactionFrom),
         frequentTransactiotoData: frequentTransactionTo,
         frequentTransactiofromData: frequentTransactionFrom,
+        userData: userData,
       })
     }
   }
@@ -86,6 +109,7 @@ class Overview extends React.Component {
           rotation: 270
         }
       })
+      this.setState({ open: true, scroll,title: title,frequentTransactiotoDataPlot: plotData });
     } else if (overViewFor === 'frequentTransactionFrom') {
       title = 'Transactions frequencies(from)'
       let i=0;
@@ -99,8 +123,24 @@ class Overview extends React.Component {
           rotation: 270
         }
       })
+      this.setState({ open: true, scroll,title: title,frequentTransactiotoDataPlot: plotData });
+    } else if (overViewFor === 'totalSpentDatatable') {
+      title = 'Total spent datatable'
+      this.setState({
+        dataTablePanelOpen: true,
+        scroll,
+        dataTableTitle: title,
+        datatableDataToShow: this.state.userData.spentMoneyDataTable,
+      });
+    } else if (overViewFor === 'totalAddedDatatable') {
+      title = 'Total added datatable'
+      this.setState({
+        dataTablePanelOpen: true,
+        scroll,
+        dataTableTitle: title,
+        datatableDataToShow: this.state.userData.spentMoneyDataTable,
+      });
     }
-    this.setState({ open: true, scroll,title: title,frequentTransactiotoDataPlot: plotData });
   };
   handleClose = () => {
     this.setState({ open: false });
@@ -108,10 +148,34 @@ class Overview extends React.Component {
   handleClickOnOverview(str) {
     this.handleClickOpen('paper')(str)
   }
+  handledataTableClose() {
+    this.setState({ dataTablePanelOpen: false });
+  }
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
+        <Dialog
+          maxWidth="xl"
+          open={this.state.dataTablePanelOpen}
+          onClose={this.handledataTableClose}
+          scroll={this.state.scroll}
+          aria-labelledby="scroll-dialog-title"
+        >
+          <DialogContent>
+            <MUIDataTable
+              title={this.state.dataTableTitle}
+              data={this.state.datatableDataToShow}
+              columns={columns}
+              options={options}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handledataTableClose} color="primary">
+              close
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Dialog
           maxWidth="lg"
           open={this.state.open}
@@ -162,7 +226,7 @@ class Overview extends React.Component {
         <Divider/>
         <Grid container spacing={24}  className={classes.content}>
           <Grid item xs={2}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('totalSpentDatatable')}}>
               <Typography component="h2" variant="display1" gutterBottom>
                 {Math.round(this.state.totalSpent)} ₹
               </Typography>
@@ -172,7 +236,7 @@ class Overview extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={2}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('totalAddedDatatable')}}>
               <Typography component="h2" variant="display1" gutterBottom>
                 {Math.round(this.state.totalAdded)} ₹
               </Typography>
