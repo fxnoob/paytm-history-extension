@@ -37,13 +37,6 @@ const styles = theme => ({
 });
 const columns = ["Amount" ,"Transaction from","Transaction to","Description", "Mode", "Closing balance","Transaction date"];
 
-const data = [
-  ["Joe James", "Test Corp", "Yonkers", "NY","Joe James", "Test Corp", "Yonkers", "NY"],
-  ["John Walsh", "Test Corp", "Hartford", "CT","Joe James", "Test Corp", "Yonkers", "NY"],
-  ["Bob Herm", "Test Corp", "Tampa", "FL","Joe James", "Test Corp", "Yonkers", "NY"],
-  ["James Houston", "Test Corp", "Dallas", "TX","Joe James", "Test Corp", "Yonkers", "NY"],
-];
-
 const options = {
   filterType: 'checkbox',
 };
