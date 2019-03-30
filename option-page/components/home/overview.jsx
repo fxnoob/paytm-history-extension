@@ -76,9 +76,22 @@ class Overview extends React.Component {
   handleClickOpen = scroll => (overViewFor) => {
     let title = '', plotData = []
     if(overViewFor === 'frequentTransactionTo') {
-      title = 'Transactions frequencies'
+      title = 'Transactions frequencies(to)'
       let i=0;
       plotData = Object.entries(this.state.frequentTransactiotoData).map(point=>{
+        return {
+          x: i++,
+          y: Number(point[1]),
+          label: String(Math.round(point[1])) + ' times',
+          rotation: 270
+        }
+      })
+    } else if (overViewFor === 'frequentTransactionFrom') {
+      title = 'Transactions frequencies(from)'
+      let i=0;
+      plotData = Object.entries(this.state.frequentTransactiofromData).map(point=>{
+        if(point[0]==='You')
+          point[1] = 0
         return {
           x: i++,
           y: Number(point[1]),
@@ -169,7 +182,7 @@ class Overview extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={2}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('frequentTransactionFrom')}}>
               <Typography component="h2" variant="display1" gutterBottom>
                 {this.state.frequentTransactionFrom?this.state.frequentTransactionFrom:'∞'}
               </Typography>
