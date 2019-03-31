@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-import {XYPlot, XAxis, YAxis, HorizontalGridLines,LabelSeries,LineSeries,VerticalBarSeries,ChartLabel} from 'react-vis';
+import {XYPlot, YAxis, HorizontalGridLines,LineSeries,ChartLabel} from 'react-vis';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
