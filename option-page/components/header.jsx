@@ -47,6 +47,9 @@ class Header extends React.Component{
       [side]: open,
     });
   };
+  help() {
+
+  }
   render() {
     const { classes } = this.props;
     const sideList = (
@@ -88,7 +91,7 @@ class Header extends React.Component{
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Paytm History
             </Typography>
-            <Button color="inherit">Refresh</Button>
+            <Button color="inherit" onClick={this.help}>Help</Button>
           </Toolbar>
         </AppBar>
         <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>

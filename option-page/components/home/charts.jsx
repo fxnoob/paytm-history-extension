@@ -6,13 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
-import  Typography from '@material-ui/core/Typography'
 
-const data = [
-  {x: 1, y: 10},
-  {x: 2, y: 5},
-  {x: 3, y: 15}
-];
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -60,6 +54,11 @@ class Charts extends Component {
     const stats = this.props.data;
     this.setState({graphData1: stats})
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      this.setState({graphData1: nextProps.data})
+    }
+  }
   changeYear(year) {
     const data = this.props.data;
     const response = Object.entries(data[year]).map(point=>{
@@ -78,7 +77,7 @@ class Charts extends Component {
     return (
       <div className={classes.root}>
         <Divider/>
-        <Grid container spacing={24}  className={classes.title}>
+        <Grid container spacing={24}  className={classes.title} data-intro='years in which you have done transaction. Click on any year button to see total monthly expense bar graph'>
           {this.state.graphData1 && Object.keys(this.state.graphData1).map(year=>{
             return (
               <Button key={year} variant="contained" onClick={()=>{this.changeYear(year)}} className={classes.button}>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Divider  from '@material-ui/core/Divider'
+import introJs from 'intro.js';
+import 'intro.js/introjs.css';
 import HeaderComponent from "../header";
 import Overview from "./overview";
 import Charts from "./charts";
@@ -29,6 +30,7 @@ export default class Home extends Component {
   }
 
   componentDidMount () {
+    introJs().start();
     /** check if data was fetched previously */
     db.get(["userData","stats"])
       .then(res=>{
@@ -40,12 +42,6 @@ export default class Home extends Component {
           frequentTransactionFrom: res.userData.userTxnFrequencyFrom,
           statData: res.stats
         });
-      })
-      .then(res=>{
-        return api.sleep(null,1000);
-      })
-      .then(res=>{
-        this.setState({showChart: true});
       })
       .catch(e=>{
         console.log(e);
@@ -65,7 +61,7 @@ export default class Home extends Component {
           userData={this.state.userData}
         />
         {/*basic charts*/}
-        {this.state.showChart?<Charts data={this.state.statData}/>:""}
+        <Charts data={this.state.statData}/>
       </React.Fragment>
     );
   }
