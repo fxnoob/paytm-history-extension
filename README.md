@@ -1,7 +1,18 @@
-# A Chrome extension boilerplate.
+# A chrome extension to show stats based on paytm transaction history.
 ## features: 
-> 1. Support for  ES7 ( with Babel and polyfill)
-> 2. popup page with reactjs and material ui framework
-> 3. Content script with reactjs and material ui framework
-> 4. Bundling (webpack)
+> * See total amount you have spent using your Paytm wallet. <br/>
+> * See total amount added in paytm wallet from bank account. <br/>
+> * See where did you get the most transaction from? <br/>
+> * See where did you most transferred to <br/>
+> * See trend line of frequencies of your transactions paytm user wise <br/>
+> * Search in transaction history and filter the search with (amount, transaction to, description, pay mode, closing balance and transaction date) <br/>
+> * Another datatable for added money from bank or other paytm user. <br/>
+> * See Bar graph of your total monthly transaction from paytm ( year wise) <br/>
+> * See Calendar view with total expenditure of day filled day wise.
+ 
+CONTRIBUTING TO THIS PROJECT .
 
+> report a bug , request new feature or addon to existing feature. 
+
+
+> Note: some features are not complete due to time limit. will update some time later.
