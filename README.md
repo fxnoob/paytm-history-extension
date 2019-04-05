@@ -23,5 +23,19 @@
 
 > report a bug , request new feature or addon to existing feature. 
 
+### Screens
+
+[screen](screens/screen1.png)
+
+[screen](screens/screen2.png)
+
+[screen](screens/screen3.png)
+
+[screen](screens/screen4.png)
+
+[screen](screens/screen5.png)
+
+
+[screen](screens/screen6.png)
 
 > `Note`: some features are not complete due to time limit. will update some time later.
