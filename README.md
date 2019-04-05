@@ -10,9 +10,18 @@
 > * See Bar graph of your total monthly transaction from paytm ( year wise) <br/>
 > * See Calendar view with total expenditure of day filled day wise.
  
-CONTRIBUTING TO THIS PROJECT .
+## How to install 
+> * Download zip file from https://github.com/fxnoob/paytm-history-extension/releases/tag/0.0.1 
+> * unzip file and drag and drop unzip folder to `chrome://extensions/` chrome page. Make sure `Developer mode` is `On`. 
+
+## Development setup 
+> * `git clone https://github.com/fxnoob/paytm-history-extension.git` <br/>
+> * `cd paytm-history-extension` <br/>
+> * `npm run build`  <br/>
+
+### CONTRIBUTING TO THIS PROJECT 
 
 > report a bug , request new feature or addon to existing feature. 
 
 
-> Note: some features are not complete due to time limit. will update some time later.
+> `Note`: some features are not complete due to time limit. will update some time later.
