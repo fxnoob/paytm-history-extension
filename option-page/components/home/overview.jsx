@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-import {XYPlot, XAxis, YAxis, HorizontalGridLines,LabelSeries,LineSeries,VerticalBarSeries,ChartLabel} from 'react-vis';
+import {XYPlot, YAxis, HorizontalGridLines,LineSeries,ChartLabel} from 'react-vis';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -219,7 +219,7 @@ class Overview extends React.Component {
         <Divider/>
         <Grid container spacing={24}  className={classes.content}>
           <Grid item xs={2}>
-            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('totalSpentDatatable')}}>
+            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('totalSpentDatatable')}} data-intro='Total spent money! Click on the tab and get full details about transactions and download them with .xls,.csv format'>
               <Typography component="h2" variant="display1" gutterBottom>
                 {Math.round(this.state.totalSpent)} ₹
               </Typography>
@@ -229,7 +229,7 @@ class Overview extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={2}>
-            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('totalAddedDatatable')}}>
+            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('totalAddedDatatable')}} data-intro='Total added money! Click on the tab and get full details about transactions and download them with xls,csv format'>
               <Typography component="h2" variant="display1" gutterBottom>
                 {Math.round(this.state.totalAdded)} ₹
               </Typography>
@@ -239,7 +239,7 @@ class Overview extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={2}>
-            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('frequentTransactionFrom')}}>
+            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('frequentTransactionFrom')}} data-intro='Most Frequent transaction from.Click on the box to see overall frequencies.'>
               <Typography component="h2" variant="display1" gutterBottom>
                 {this.state.frequentTransactionFrom?this.state.frequentTransactionFrom:'∞'}
               </Typography>
@@ -249,7 +249,7 @@ class Overview extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={2}>
-            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('frequentTransactionTo')}}>
+            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('frequentTransactionTo')}} data-intro='Most Frequent contact you have transferred money to.Click on the box to see overall frequencies.'>
               <Typography component="h2" variant="display1" gutterBottom>
                 {this.state.frequentTransactionTo?this.state.frequentTransactionTo:'∞'}
               </Typography>
