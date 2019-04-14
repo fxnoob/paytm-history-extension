@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import introJs from 'intro.js';
 import 'intro.js/introjs.css';
+import Lottie from 'lottie-react-web'
+import loader from './loader'
 import HeaderComponent from "../header";
 import Overview from "./overview";
 import Charts from "./charts";
@@ -23,6 +25,7 @@ export default class Home extends Component {
     showChart: false,
     statData: null,
     userData: null,
+    loaded: false
   };
 
   constructor(props) {
@@ -30,9 +33,11 @@ export default class Home extends Component {
   }
 
   componentDidMount () {
-    introJs().start();
+      setTimeout(() => {
+        this.setState({loaded: true})
+      },3000)
     /** check if data was fetched previously */
-    db.get(["userData","stats"])
+    db.get(["userData","stats","help"])
       .then(res=>{
         this.setState({
           userData: res.userData,
@@ -42,6 +47,10 @@ export default class Home extends Component {
           frequentTransactionFrom: res.userData.userTxnFrequencyFrom,
           statData: res.stats
         });
+        if(res.help === true) {
+          introJs().start();
+          db.set({help: false})
+        }
       })
       .catch(e=>{
         console.log(e);
@@ -50,7 +59,7 @@ export default class Home extends Component {
   render() {
 
     return (
-      <React.Fragment>
+      this.state.loaded?(<React.Fragment>
         <HeaderComponent/>
         {/*overview boxes*/}
         <Overview
@@ -62,7 +71,15 @@ export default class Home extends Component {
         />
         {/*basic charts*/}
         <Charts data={this.state.statData}/>
-      </React.Fragment>
+      </React.Fragment>):(
+        <React.Fragment>
+          <Lottie
+            options={{
+              animationData: loader
+            }}
+          />
+        </React.Fragment>
+      )
     );
   }
 }

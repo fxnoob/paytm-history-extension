@@ -17,7 +17,6 @@ export const txnParser = async () => {
   return api.fetchTxHistory()
     .then(res=> {
       let totalSpent = 0 , totalAdded = 0;
-      console.log(api.TxHistoryData);
       const dateDataMonthlySpent = modal.dateProxy();
       const transactionWithFreqTo = modal.proxy();
       const userTxnFrequencyFrom = modal.proxy();
@@ -97,7 +96,6 @@ export const txnParser = async () => {
 export const txnParserCalendarEventsInput = async (apiOriginalResponse) => {
   const events = [];
   let lastTxnDate= new Date();
-  let totalSpentInDay = 0;
   const resp = {
     id: 0,
     title: '',

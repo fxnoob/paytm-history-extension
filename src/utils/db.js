@@ -1,6 +1,8 @@
 export class Schema {
   constructor () {
     this.data = {
+      /** show help  */
+      help: true,
       /** 0: if not logged in. 1 if logged in */
       dataMounted: false,
       /** last time when apis was hit successfully */

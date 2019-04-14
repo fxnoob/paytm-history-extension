@@ -46,7 +46,10 @@ class Calendar extends React.Component {
   constructor (props) {
     super(props);
   }
+
   componentDidMount () {
+    window.onbeforeunload = function(e) {
+    };
     db.get("userData")
       .then(res=>res.userData.apiOriginalResponse)
       .then(res=> txnParserCalendarEventsInput(res))

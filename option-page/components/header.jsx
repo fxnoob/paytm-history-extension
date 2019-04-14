@@ -11,6 +11,7 @@ import List from '@material-ui/core/List';
 import { Link } from "react-router-dom";
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider'
+import introJs from 'intro.js';
 
 const styles = {
   root: {
@@ -48,7 +49,7 @@ class Header extends React.Component{
     });
   };
   help() {
-
+    introJs().start();
   }
   render() {
     const { classes } = this.props;
