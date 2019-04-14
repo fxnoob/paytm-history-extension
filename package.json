@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --hot",
     "build": "webpack --colors --config webpack.config.js --mode=development",
+    "dev": "webpack --watch --colors --config webpack.config.js --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -47,6 +47,7 @@
     "dayjs": "^1.8.11",
     "dotenv": "^6.2.0",
     "intro.js": "^2.9.3",
+    "lottie-react-web": "^2.1.4",
     "moment": "^2.24.0",
     "mui-datatables": "^2.0.0-beta.59",
     "prop-types": "^15.6.2",

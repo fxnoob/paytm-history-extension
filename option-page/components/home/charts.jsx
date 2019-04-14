@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import "react-vis/dist/style";
 /** https://github.com/uber/react-vis */
-import {XYPlot, XAxis, YAxis, HorizontalGridLines,LabelSeries,LineSeries,VerticalBarSeries,ChartLabel} from 'react-vis';
+import {XYPlot, XAxis, YAxis, Crosshair, HorizontalGridLines,LabelSeries,LineSeries,VerticalBarSeries,ChartLabel} from 'react-vis';
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/es/Typography/Typography'
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     marginRight: theme.spacing.unit* 2 ,
-    marginLeft: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 2,
   },
   button: {
@@ -22,7 +25,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit ,
   },
   title:{
-    marginLeft: theme.spacing.unit * 2,
+    fontSize: 14,
   },
   content:{
     marginRight: theme.spacing.unit ,
@@ -31,6 +34,14 @@ const styles = theme => ({
     padding: theme.spacing.unit * 1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  card: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
   },
 });
 
@@ -42,7 +53,8 @@ class Charts extends Component {
     frequentTransactionTo: "",
     frequentTransactionFrom: "",
     graphData1: null,
-    barGraphdata1: []
+    barGraphdata1: [],
+    crosshairValues: []
   };
 
   constructor(props) {
@@ -53,14 +65,21 @@ class Charts extends Component {
     /**get stats data from props */
     const stats = this.props.data;
     this.setState({graphData1: stats})
+    setTimeout(() => {
+      const year = Object.keys(this.props.data)[0]
+      this.changeYear(year)
+    }, 300)
   }
   componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
       this.setState({graphData1: nextProps.data})
+      console.log("nextProps", nextProps.data);
     }
   }
   changeYear(year) {
+
     const data = this.props.data;
+    console.log(data);
     const response = Object.entries(data[year]).map(point=>{
       return {
         x: Number(point[0]),
@@ -77,7 +96,7 @@ class Charts extends Component {
     return (
       <div className={classes.root}>
         <Divider/>
-        <Grid container spacing={24}  className={classes.title} data-intro='years in which you have done transaction. Click on any year button to see total monthly expense bar graph'>
+        <Grid container spacing={24}  style={{marginLeft: '10px'}} className={classes.title} data-intro='years in which you have done transaction. Click on any year button to see total monthly expense bar graph'>
           {this.state.graphData1 && Object.keys(this.state.graphData1).map(year=>{
             return (
               <Button key={year} variant="contained" onClick={()=>{this.changeYear(year)}} className={classes.button}>
@@ -85,109 +104,142 @@ class Charts extends Component {
               </Button>
             );
           })}
+          <Typography  component="p" variant="display1" gutterBottom style={{
+            marginTop: '20px',
+            marginLeft: '10px'
+          }}>
+            Click on any year to see expenditure Graph year wise
+          </Typography>
         </Grid>
         <Grid container spacing={24}  className={classes.title}>
           <Grid item xs={4}>
-            <XYPlot
-              width={400}
-              height={300}>
-              <HorizontalGridLines />
-              <LabelSeries
-                animation
-                allowOffsetToBeReversed
-                data={this.state.barGraphdata1} />
-              <VerticalBarSeries data={this.state.barGraphdata1} />
-              <LineSeries
-                data={this.state.barGraphdata1}/>
-              <XAxis />
-              <YAxis />
-              <ChartLabel
-                text="months"
-                className="alt-x-label"
-                includeMargin={false}
-                xPercent={0.025}
-                yPercent={1.01}
-              />
-              <ChartLabel
-                text="Spent money"
-                className="alt-y-label"
-                includeMargin={false}
-                xPercent={0.06}
-                yPercent={0.06}
-                style={{
-                  transform: 'rotate(-90)',
-                  textAnchor: 'end'
-                }}
-              />
-            </XYPlot>
+            <Card className={classes.card}>
+              <CardContent>
+                <XYPlot
+                  width={385}
+                  height={300}>
+                  <HorizontalGridLines />
+                  <LabelSeries
+                    animation
+                    allowOffsetToBeReversed
+                    data={this.state.barGraphdata1} />
+                  <LineSeries
+                    data={this.state.barGraphdata1}/>
+                  <Crosshair values={this.state.crosshairValues}/>
+                  <XAxis />
+                  <YAxis />
+                  <ChartLabel
+                    text="months"
+                    className="alt-x-label"
+                    includeMargin={false}
+                    xPercent={0.025}
+                    yPercent={1.01}
+                  />
+                  <ChartLabel
+                    text="Spent money"
+                    className="alt-y-label"
+                    includeMargin={false}
+                    xPercent={0.06}
+                    yPercent={0.06}
+                    style={{
+                      transform: 'rotate(-90)',
+                      textAnchor: 'end'
+                    }}
+                  />
+                </XYPlot>
+              </CardContent>
+              <CardActions>
+                <p>
+                  Graph of total transacted money per month
+                </p>
+              </CardActions>
+            </Card>
           </Grid>
           <Grid item xs={4}>
-            <XYPlot
-              width={400}
-              height={300}>
-              <HorizontalGridLines />
-              <LabelSeries
-                animation
-                allowOffsetToBeReversed
-                data={this.state.barGraphdata1} />
-              <VerticalBarSeries data={this.state.barGraphdata1} />
-              <LineSeries
-                data={this.state.barGraphdata1}/>
-              <XAxis />
-              <YAxis />
-              <ChartLabel
-                text="months"
-                className="alt-x-label"
-                includeMargin={false}
-                xPercent={0.025}
-                yPercent={1.01}
-              />
-              <ChartLabel
-                text="Spent money"
-                className="alt-y-label"
-                includeMargin={false}
-                xPercent={0.06}
-                yPercent={0.06}
-                style={{
-                  transform: 'rotate(-90)',
-                  textAnchor: 'end'
-                }}
-              />
-            </XYPlot>
+            <Card className={classes.card}>
+              <CardContent>
+                <XYPlot
+                  width={385}
+                  height={300}>
+                  <HorizontalGridLines />
+                  <LabelSeries
+                    animation
+                    allowOffsetToBeReversed
+                    data={this.state.barGraphdata1} />
+                  <LineSeries
+                    data={this.state.barGraphdata1}/>
+                  <Crosshair values={this.state.crosshairValues}/>
+                  <XAxis />
+                  <YAxis />
+                  <ChartLabel
+                    text="months"
+                    className="alt-x-label"
+                    includeMargin={false}
+                    xPercent={0.025}
+                    yPercent={1.01}
+                  />
+                  <ChartLabel
+                    text="Spent money"
+                    className="alt-y-label"
+                    includeMargin={false}
+                    xPercent={0.06}
+                    yPercent={0.06}
+                    style={{
+                      transform: 'rotate(-90)',
+                      textAnchor: 'end'
+                    }}
+                  />
+                </XYPlot>
+              </CardContent>
+              <CardActions>
+                <p>
+                  Graph of total transacted money per month
+                </p>
+              </CardActions>
+            </Card>
           </Grid>
           <Grid item xs={4}>
-            <XYPlot
-              width={400}
-              height={300}>
-              <HorizontalGridLines />
-              <LabelSeries
-                animation
-                allowOffsetToBeReversed
-                data={this.state.barGraphdata1} />
-              <VerticalBarSeries data={this.state.barGraphdata1} />
-              <LineSeries
-                data={this.state.barGraphdata1}/>
-              <XAxis />
-              <YAxis />
-              <ChartLabel
-                text="months"
-                className="alt-x-label"
-                includeMargin={false}
-                xPercent={0.025}
-                yPercent={1.01}
-              />
-              <ChartLabel
-                text="Spent money"
-                className="alt-y-label"
-                includeMargin={false}
-                xPercent={0.06}
-                yPercent={0.06}
-                style={{
-                  transform: 'rotate(-90)',
-                  textAnchor: 'end'
-                }}
-              />
-            </XYPlot>
+            <Card className={classes.card}>
+              <CardContent>
+                <XYPlot
+                  width={385}
+                  height={300}>
+                  <HorizontalGridLines />
+                  <LabelSeries
+                    animation
+                    allowOffsetToBeReversed
+                    data={this.state.barGraphdata1} />
+                  <LineSeries
+                    data={this.state.barGraphdata1}/>
+                  <Crosshair values={this.state.crosshairValues}/>
+                  <XAxis />
+                  <YAxis />
+                  <ChartLabel
+                    text="months"
+                    className="alt-x-label"
+                    includeMargin={false}
+                    xPercent={0.025}
+                    yPercent={1.01}
+                  />
+                  <ChartLabel
+                    text="Spent money"
+                    className="alt-y-label"
+                    includeMargin={false}
+                    xPercent={0.06}
+                    yPercent={0.06}
+                    style={{
+                      transform: 'rotate(-90)',
+                      textAnchor: 'end'
+                    }}
+                  />
+                </XYPlot>
+              </CardContent>
+              <CardActions>
+                <p>
+                  Graph of total transacted money per month
+                </p>
+              </CardActions>
+            </Card>
           </Grid>
         </Grid>
       </div>

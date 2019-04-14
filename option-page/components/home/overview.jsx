@@ -33,6 +33,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    height: '140px',
   },
 });
 const columns = ["Amount" ,"Transaction from","Transaction to","Description", "Mode", "Closing balance","Transaction date"];
@@ -224,7 +225,7 @@ class Overview extends React.Component {
                 {Math.round(this.state.totalSpent)} ₹
               </Typography>
               <Typography variant="caption" gutterBottom align="center">
-                Total spent
+                Total spent (click to see more)
               </Typography>
             </Paper>
           </Grid>
@@ -234,7 +235,7 @@ class Overview extends React.Component {
                 {Math.round(this.state.totalAdded)} ₹
               </Typography>
               <Typography variant="caption" gutterBottom align="center">
-                Total added
+                Total added(click to see more)
               </Typography>
             </Paper>
           </Grid>
@@ -244,7 +245,7 @@ class Overview extends React.Component {
                 {this.state.frequentTransactionFrom?this.state.frequentTransactionFrom:'∞'}
               </Typography>
               <Typography variant="caption" gutterBottom align="center">
-                Frequent transaction from
+                Frequent transaction from(click to see more)
               </Typography>
             </Paper>
           </Grid>
@@ -254,7 +255,7 @@ class Overview extends React.Component {
                 {this.state.frequentTransactionTo?this.state.frequentTransactionTo:'∞'}
               </Typography>
               <Typography variant="caption" gutterBottom align="center">
-                Frequent transaction to
+                Frequent transaction to(click to see more)
               </Typography>
             </Paper>
           </Grid>
