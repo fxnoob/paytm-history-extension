@@ -1,51 +1,51 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
 import { Link } from "react-router-dom";
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider'
-import introJs from 'intro.js';
+import ListItem from "@material-ui/core/ListItem";
+import Divider from "@material-ui/core/Divider";
+import introJs from "intro.js";
 
 const styles = {
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   list: {
-    width: 250,
+    width: 250
   },
   fullList: {
-    width: 'auto',
+    width: "auto"
   },
   grow: {
     flexGrow: 1,
-    textAlign: 'center'
+    textAlign: "center"
   },
   button: {
-    width: '100%'
+    width: "100%"
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
-  },
+    marginRight: 20
+  }
 };
 
-class Header extends React.Component{
+class Header extends React.Component {
   state = {
     left: false
   };
-  constructor (props) {
+  constructor(props) {
     super(props);
   }
   toggleDrawer = (side, open) => () => {
     this.setState({
-      [side]: open,
+      [side]: open
     });
   };
   help() {
@@ -58,49 +58,74 @@ class Header extends React.Component{
         <List>
           <ListItem button>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-             Quick Links
+              Quick Links
             </Typography>
           </ListItem>
           <ListItem button>
-            <Button variant="outlined" color="secondary" className={classes.button}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.button}
+            >
               <Link to="/option.html">Home</Link>
             </Button>
           </ListItem>
-          <Divider/>
+          <Divider />
           <ListItem button>
-            <Button variant="outlined" color="secondary" className={classes.button}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.button}
+            >
               <Link to="/calendar.html">Calendar View</Link>
             </Button>
           </ListItem>
-          <Divider/>
+          <Divider />
           <ListItem button>
-            <Button variant="outlined" color="secondary" className={classes.button}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.button}
+            >
               <Link to="/about.html">About</Link>
             </Button>
           </ListItem>
-          <Divider/>
+          <Divider />
         </List>
       </div>
     );
     return (
       <div className={classes.root}>
-        <AppBar position="static" style={{color: '#828282',backgroundColor: '#ffffff'}}>
+        <AppBar
+          position="static"
+          style={{ color: "#828282", backgroundColor: "#ffffff" }}
+        >
           <Toolbar>
-            <IconButton onClick={this.toggleDrawer('left', true)} className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon/>
+            <IconButton
+              onClick={this.toggleDrawer("left", true)}
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="Menu"
+            >
+              <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Paytm History
             </Typography>
-            <Button color="inherit" onClick={this.help}>Help</Button>
+            <Button color="inherit" onClick={this.help}>
+              Help
+            </Button>
           </Toolbar>
         </AppBar>
-        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+        <Drawer
+          open={this.state.left}
+          onClose={this.toggleDrawer("left", false)}
+        >
           <div
             tabIndex={0}
             role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
+            onClick={this.toggleDrawer("left", false)}
+            onKeyDown={this.toggleDrawer("left", false)}
           >
             {sideList}
           </div>

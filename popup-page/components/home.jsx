@@ -1,129 +1,125 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import Db  from '../../src/utils/db';
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import Db from "../../src/utils/db";
 
 const styles = theme => ({
   card: {
-    display: 'flex',
+    display: "flex"
   },
   RefreshShareDiv: {
-    fontSize:'14px',
-    marginBottom: '-14px'
+    fontSize: "14px",
   },
   shareLink: {
-  marginLeft: theme.spacing.unit
+    marginLeft: theme.spacing.unit
+  },
+  linkR: {
+    fontSize: "14px"
   },
   link: {
-    margin: theme.spacing.unit,
     fontSize: "18px"
   },
   details: {
-    display: 'flex',
-    flexDirection: 'column',
-    minWidth: '200px'
+    display: "flex",
+    flexDirection: "column",
+    minWidth: "200px"
   },
   content: {
-    flex: '1 0 auto',
+    flex: "1 0 auto",
+    minWidth: "200px"
   },
   cover: {
-    width: 151,
+    width: 151
   },
   controls: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
+    display: "flex",
   },
   playIcon: {
     height: 38,
-    width: 38,
-  },
+    width: 38
+  }
 });
 const db = new Db();
 
-class  MediaControlCard extends React.Component{
+class MediaControlCard extends React.Component {
   state = {
     spentMoney: 0,
-    lastChecked: '00000'
+    lastChecked: "00000"
   };
   constructor(props) {
     super(props);
     this.refreshDetails = this.refreshDetails.bind(this);
   }
-  componentDidMount () {
-    db.get(["userData","lastChecked","stats"])
-      .then(res=> {
+  componentDidMount() {
+    db.get(["userData", "lastChecked", "stats"])
+      .then(res => {
         console.log(res);
-        const currDate = +new Date;
+        const currDate = +new Date();
         let difference = currDate - res.lastChecked;
-        let daysDifference = Math.floor(difference/1000/60/60/24);
-        let lastCheckMesssage ="";
-        if(daysDifference === 0) {
-          difference -= daysDifference*1000*60*60*24;
-          const hoursDifference = Math.floor(difference/1000/60/60);
-          if(hoursDifference === 0) {
-            difference -= hoursDifference*1000*60*60
-            const minutesDifference = Math.floor(difference/1000/60);
-            if(minutesDifference === 0) {
-              difference -= minutesDifference*1000*60
-              const secondsDifference = Math.floor(difference/1000);
-              lastCheckMesssage = secondsDifference+ " seconds ago";
+        let daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);
+        let lastCheckMesssage = "";
+        if (daysDifference === 0) {
+          difference -= daysDifference * 1000 * 60 * 60 * 24;
+          const hoursDifference = Math.floor(difference / 1000 / 60 / 60);
+          if (hoursDifference === 0) {
+            difference -= hoursDifference * 1000 * 60 * 60;
+            const minutesDifference = Math.floor(difference / 1000 / 60);
+            if (minutesDifference === 0) {
+              difference -= minutesDifference * 1000 * 60;
+              const secondsDifference = Math.floor(difference / 1000);
+              lastCheckMesssage = secondsDifference + " seconds ago";
             } else {
-              lastCheckMesssage = minutesDifference+ " minute ago";
+              lastCheckMesssage = minutesDifference + " minute ago";
             }
           } else {
-            lastCheckMesssage = hoursDifference+ " hour ago";
+            lastCheckMesssage = hoursDifference + " hour ago";
           }
-        }
-        else
-        lastCheckMesssage = daysDifference+" day ago";
-        this.setState({spentMoney: res.userData.totalSpent,lastChecked: lastCheckMesssage})
+        } else lastCheckMesssage = daysDifference + " day ago";
+        this.setState({
+          spentMoney: res.userData.totalSpent,
+          lastChecked: lastCheckMesssage
+        });
       })
-      .catch(e=>{
+      .catch(e => {
         console.log(e);
-      })
+      });
   }
   refreshDetails() {
-    db.set({dataMounted: false })
-      .then(res=>{
+    db.set({ dataMounted: false })
+      .then(res => {
         this.props.gotoLogin();
       })
-      .catch(e=>{
+      .catch(e => {
         console.log(e);
       });
   }
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     return (
-        <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography component="h6" variant="h6">
-              Paytm History
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {Math.round(this.state.spentMoney)}  ₹ spent.
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary" style={{fontSize:'inherit'}}>
-              last checked  {this.state.lastChecked}.
-            </Typography>
-            <div className={classes.RefreshShareDiv}>
-            <Link href="" onClick={this.refreshDetails}>
-              refresh
-            </Link>
-            <Link href="/details.html" target="_blank" className={classes.shareLink}>
-              share
-            </Link>
-            </div>
-          </CardContent>
-          <div className={classes.controls}>
-            <Link href="/option.html" target="_blank" className={classes.link}>
-              Detailed Report
-            </Link>
-          </div>
-        </div>
+      <CardContent className={classes.content}>
+        <Typography component="h6" variant="h6">
+          Paytm History
+        </Typography>
+        <Typography variant="subtitle1" color="textSecondary">
+          {Math.round(this.state.spentMoney)} ₹ spent.
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          color="textSecondary"
+          style={{ fontSize: "inherit" }}
+        >
+          last checked {this.state.lastChecked}.
+        </Typography>
+        <Link href="" onClick={this.refreshDetails} className={classes.linkR}>
+          refresh
+        </Link>
+        <br/>
+        <Link href="/option.html" target="_blank" className={classes.link}>
+          Detailed Report
+        </Link>
+      </CardContent>
     );
   }
 }

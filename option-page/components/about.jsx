@@ -1,14 +1,12 @@
-import React  from "react";
+import React from "react";
 import HeaderComponent from "./header";
 
 export default class About extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
   }
-  componentDidMount () {}
+  componentDidMount() {}
   render() {
-    return (
-      <HeaderComponent/>
-    );
+    return <HeaderComponent />;
   }
 }

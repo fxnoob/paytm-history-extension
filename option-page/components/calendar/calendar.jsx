@@ -1,65 +1,64 @@
-import React  from "react";
-import moment from 'moment'
-import BigCalendar from 'react-big-calendar'
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import Divider from '@material-ui/core/Divider'
+import React from "react";
+import moment from "moment";
+import BigCalendar from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Divider from "@material-ui/core/Divider";
 import HeaderComponent from "../header";
-import dates from '../../../src/utils/dates';
-import dB from '../../../src/utils/db';
-import { txnParserCalendarEventsInput } from '../../../src/utils/responseParser';
+import dates from "../../../src/utils/dates";
+import dB from "../../../src/utils/db";
+import { txnParserCalendarEventsInput } from "../../../src/utils/responseParser";
 
 const db = new dB();
-const localizer = BigCalendar.momentLocalizer(moment)
-let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
+const localizer = BigCalendar.momentLocalizer(moment);
+let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
 const styles = theme => ({
-  title:{
+  title: {
     flexGrow: 1,
-    marginRight: theme.spacing.unit* 2 ,
+    marginRight: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2
   }
 });
 
 const MyCalendar = props => (
-  <div style={{height: '600px'}}>
+  <div style={{ height: "600px" }}>
     <BigCalendar
       events={props.events}
       views={allViews}
       step={60}
       showMultiDayTimes
-      max={dates.add(dates.endOf(new Date(2015, 17, 1), 'day'), -1, 'hours')}
+      max={dates.add(dates.endOf(new Date(2015, 17, 1), "day"), -1, "hours")}
       defaultDate={props.lastTxnDate}
       localizer={localizer}
     />
   </div>
-)
+);
 
 class Calendar extends React.Component {
   state = {
     lastTxnDate: new Date(),
     events: []
-  }
-  constructor (props) {
+  };
+  constructor(props) {
     super(props);
   }
 
-  componentDidMount () {
-    window.onbeforeunload = function(e) {
-    };
+  componentDidMount() {
+    window.onbeforeunload = function(e) {};
     db.get("userData")
-      .then(res=>res.userData.apiOriginalResponse)
-      .then(res=> txnParserCalendarEventsInput(res))
-      .then(res=>{
+      .then(res => res.userData.apiOriginalResponse)
+      .then(res => txnParserCalendarEventsInput(res))
+      .then(res => {
         console.log(res);
-        this.setState({events: res.events, lastTxnDate: res.lastTxnDate});
+        this.setState({ events: res.events, lastTxnDate: res.lastTxnDate });
       })
-      .catch(e=>{
+      .catch(e => {
         console.log(e);
-      })
+      });
   }
   render() {
     const { classes } = this.props;
@@ -73,14 +72,17 @@ class Calendar extends React.Component {
                 Calendar view
               </Typography>
             </Grid>
-            <Divider/>
+            <Divider />
             <Grid item xs={12}>
-              <MyCalendar events={this.state.events} lastTxnDate={this.state.lastTxnDate}/>
+              <MyCalendar
+                events={this.state.events}
+                lastTxnDate={this.state.lastTxnDate}
+              />
             </Grid>
           </Grid>
         </div>
       </React.Fragment>
-      );
+    );
   }
 }
 export default withStyles(styles)(Calendar);
