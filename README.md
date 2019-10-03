@@ -41,6 +41,6 @@
 
 [screen](screens/screen6.png)
 
-#### Contributers
+#### Contributors
 
  [Talha Anwar](https://nosemantic.com)
