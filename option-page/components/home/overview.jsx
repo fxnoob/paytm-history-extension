@@ -1,45 +1,59 @@
-import React from 'react';
+import React from "react";
 import MUIDataTable from "mui-datatables";
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
-import {XYPlot, YAxis, HorizontalGridLines,LineSeries,ChartLabel} from 'react-vis';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import {
+  XYPlot,
+  YAxis,
+  HorizontalGridLines,
+  LineSeries,
+  ChartLabel
+} from "react-vis";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
 import Modal from "../../../src/utils/modal";
 
 const modal = new Modal();
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginRight: theme.spacing.unit* 2 ,
+    marginRight: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2
   },
-  title:{
+  title: {
     opacity: 0,
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit * 2
   },
-  content:{
-    marginRight: theme.spacing.unit ,
+  content: {
+    marginRight: theme.spacing.unit
   },
   paper: {
-    cursor: 'hand',
+    cursor: "hand",
     padding: theme.spacing.unit * 1,
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
-    height: '140px',
-  },
+    height: "140px"
+  }
 });
-const columns = ["Amount" ,"Transaction from","Transaction to","Description", "Mode", "Closing balance","Transaction date"];
+const columns = [
+  "Amount",
+  "Transaction from",
+  "Transaction to",
+  "Description",
+  "Mode",
+  "Closing balance",
+  "Transaction date"
+];
 
 const options = {
-  filterType: 'checkbox',
+  filterType: "checkbox"
 };
 
 class Overview extends React.Component {
@@ -49,8 +63,8 @@ class Overview extends React.Component {
     frequentTransactionTo: 0,
     frequentTransactionFrom: 0,
     open: false,
-    scroll: 'paper',
-    title: '',
+    scroll: "paper",
+    title: "",
     frequentTransactiotoData: [],
     frequentTransactiofromData: [],
     frequentTransactiotoDataPlot: [],
@@ -58,27 +72,47 @@ class Overview extends React.Component {
     dataTablePanelOpen: false,
     spentMoneyDataTable: [],
     addedMoneyDataTable: [],
-    userData: null,
-    datatableDataToShow: [['','','','','','','']],
+    userData: false,
+    datatableDataToShow: [["", "", "", "", "", "", ""]],
+    transactionMaxAmount: 0,
+    transactionMinAmount: 0
   };
   constructor(props) {
-    super(props)
-    this.handledataTableClose = this.handledataTableClose.bind(this)
+    super(props);
+    this.handledataTableClose = this.handledataTableClose.bind(this);
   }
-  componentDidMount () {
-    const { totalSpent , totalAdded, frequentTransactionTo, frequentTransactionFrom  } = this.props;
+  componentDidMount() {
+    const {
+      totalSpent,
+      totalAdded,
+      frequentTransactionTo,
+      frequentTransactionFrom,
+      transactionMinAmount,
+      transactionMaxAmount,
+      userData
+    } = this.props;
     console.log(frequentTransactionTo);
     this.setState({
+      userData: userData,
       totalSpent: totalSpent,
       totalAdded: totalAdded,
       frequentTransactionTo: modal.getMax(frequentTransactionTo),
-      frequentTransactionFrom: modal.getMax(frequentTransactionFrom)
-    })
+      frequentTransactionFrom: modal.getMax(frequentTransactionFrom),
+      transactionMaxAmount: frequentTransactionFrom,
+      transactionMinAmount: transactionMinAmount
+    });
   }
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps', nextProps);
+    console.log("componentWillReceiveProps", nextProps);
     if (this.props !== nextProps) {
-      const { totalSpent,totalAdded,frequentTransactionTo,frequentTransactionFrom,userData } = nextProps;
+      const {
+        totalSpent,
+        totalAdded,
+        frequentTransactionTo,
+        frequentTransactionFrom,
+        userData
+      } = nextProps;
+      console.log(userData);
       this.setState({
         totalSpent: totalSpent,
         totalAdded: totalAdded,
@@ -86,53 +120,67 @@ class Overview extends React.Component {
         frequentTransactionFrom: modal.getMax(frequentTransactionFrom),
         frequentTransactiotoData: frequentTransactionTo,
         frequentTransactiofromData: frequentTransactionFrom,
-        userData: userData,
-      })
+        userData: userData
+      });
     }
   }
-  handleClickOpen = scroll => (overViewFor) => {
-    let title = '', plotData = []
-    if(overViewFor === 'frequentTransactionTo') {
-      title = 'Transactions frequencies(to)'
-      let i=0;
-      plotData = Object.entries(this.state.frequentTransactiotoData).map(point=>{
-        return {
-          x: i++,
-          y: Number(point[1]),
-          label: String(Math.round(point[1])) + ' times',
-          rotation: 270
+  handleClickOpen = scroll => overViewFor => {
+    let title = "",
+      plotData = [];
+    if (overViewFor === "frequentTransactionTo") {
+      title = "Transactions frequencies(to)";
+      let i = 0;
+      plotData = Object.entries(this.state.frequentTransactiotoData).map(
+        point => {
+          return {
+            x: i++,
+            y: Number(point[1]),
+            label: String(Math.round(point[1])) + " times",
+            rotation: 270
+          };
         }
-      })
-      this.setState({ open: true, scroll,title: title,frequentTransactiotoDataPlot: plotData });
-    } else if (overViewFor === 'frequentTransactionFrom') {
-      title = 'Transactions frequencies(from)'
-      let i=0;
-      plotData = Object.entries(this.state.frequentTransactiofromData).map(point=>{
-        if(point[0]==='You')
-          point[1] = 0
-        return {
-          x: i++,
-          y: Number(point[1]),
-          label: String(Math.round(point[1])) + ' times',
-          rotation: 270
-        }
-      })
-      this.setState({ open: true, scroll,title: title,frequentTransactiotoDataPlot: plotData });
-    } else if (overViewFor === 'totalSpentDatatable') {
-      title = 'Total spent datatable'
+      );
       this.setState({
-        dataTablePanelOpen: true,
+        open: true,
         scroll,
-        dataTableTitle: title,
-        datatableDataToShow: this.state.userData.spentMoneyDataTable,
+        title: title,
+        frequentTransactiotoDataPlot: plotData
       });
-    } else if (overViewFor === 'totalAddedDatatable') {
-      title = 'Total added datatable'
+    } else if (overViewFor === "frequentTransactionFrom") {
+      title = "Transactions frequencies(from)";
+      let i = 0;
+      plotData = Object.entries(this.state.frequentTransactiofromData).map(
+        point => {
+          if (point[0] === "You") point[1] = 0;
+          return {
+            x: i++,
+            y: Number(point[1]),
+            label: String(Math.round(point[1])) + " times",
+            rotation: 270
+          };
+        }
+      );
+      this.setState({
+        open: true,
+        scroll,
+        title: title,
+        frequentTransactiotoDataPlot: plotData
+      });
+    } else if (overViewFor === "totalSpentDatatable") {
+      title = "Total spent datatable";
       this.setState({
         dataTablePanelOpen: true,
         scroll,
         dataTableTitle: title,
-        datatableDataToShow: this.state.userData.spentMoneyDataTable,
+        datatableDataToShow: this.state.userData.spentMoneyDataTable
+      });
+    } else if (overViewFor === "totalAddedDatatable") {
+      title = "Total added datatable";
+      this.setState({
+        dataTablePanelOpen: true,
+        scroll,
+        dataTableTitle: title,
+        datatableDataToShow: this.state.userData.spentMoneyDataTable
       });
     }
   };
@@ -140,7 +188,7 @@ class Overview extends React.Component {
     this.setState({ open: false });
   };
   handleClickOnOverview(str) {
-    this.handleClickOpen('paper')(str)
+    this.handleClickOpen("paper")(str);
   }
   handledataTableClose() {
     this.setState({ dataTablePanelOpen: false });
@@ -179,12 +227,9 @@ class Overview extends React.Component {
         >
           <DialogTitle id="scroll-dialog-title">{this.state.title}</DialogTitle>
           <DialogContent>
-            <XYPlot
-              width={600}
-              height={300}>
+            <XYPlot width={600} height={300}>
               <HorizontalGridLines />
-              <LineSeries
-                data={this.state.frequentTransactiotoDataPlot}/>
+              <LineSeries data={this.state.frequentTransactiotoDataPlot} />
               <YAxis />
               <ChartLabel
                 text="time"
@@ -200,8 +245,8 @@ class Overview extends React.Component {
                 xPercent={0.06}
                 yPercent={0.06}
                 style={{
-                  transform: 'rotate(-90)',
-                  textAnchor: 'end'
+                  transform: "rotate(-90)",
+                  textAnchor: "end"
                 }}
               />
             </XYPlot>
@@ -212,15 +257,21 @@ class Overview extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <Grid container spacing={24}  className={classes.title}>
+        <Grid container spacing={24} className={classes.title}>
           <Typography component="h2" variant="display1" gutterBottom>
             Overview
           </Typography>
         </Grid>
-        <Divider/>
-        <Grid container spacing={24}  className={classes.content}>
+        <Divider />
+        <Grid container spacing={24} className={classes.content}>
           <Grid item xs={2}>
-            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('totalSpentDatatable')}} data-intro='Total spent money! Click on the tab and get full details about transactions and download them with .xls,.csv format'>
+            <Paper
+              className={classes.paper}
+              onClick={() => {
+                this.handleClickOnOverview("totalSpentDatatable");
+              }}
+              data-intro="Total spent money! Click on the tab and get full details about transactions and download them with .xls,.csv format"
+            >
               <Typography component="h2" variant="display1" gutterBottom>
                 {Math.round(this.state.totalSpent)} ₹
               </Typography>
@@ -230,7 +281,13 @@ class Overview extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={2}>
-            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('totalAddedDatatable')}} data-intro='Total added money! Click on the tab and get full details about transactions and download them with xls,csv format'>
+            <Paper
+              className={classes.paper}
+              onClick={() => {
+                this.handleClickOnOverview("totalAddedDatatable");
+              }}
+              data-intro="Total added money! Click on the tab and get full details about transactions and download them with xls,csv format"
+            >
               <Typography component="h2" variant="display1" gutterBottom>
                 {Math.round(this.state.totalAdded)} ₹
               </Typography>
@@ -240,9 +297,17 @@ class Overview extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={2}>
-            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('frequentTransactionFrom')}} data-intro='Most Frequent transaction from.Click on the box to see overall frequencies.'>
+            <Paper
+              className={classes.paper}
+              onClick={() => {
+                this.handleClickOnOverview("frequentTransactionFrom");
+              }}
+              data-intro="Most Frequent transaction from.Click on the box to see overall frequencies."
+            >
               <Typography component="h2" variant="display1" gutterBottom>
-                {this.state.frequentTransactionFrom?this.state.frequentTransactionFrom:'∞'}
+                {this.state.frequentTransactionFrom
+                  ? this.state.frequentTransactionFrom
+                  : "∞"}
               </Typography>
               <Typography variant="caption" gutterBottom align="center">
                 Frequent transaction from(click to see more)
@@ -250,32 +315,20 @@ class Overview extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={2}>
-            <Paper className={classes.paper} onClick={()=>{this.handleClickOnOverview('frequentTransactionTo')}} data-intro='Most Frequent contact you have transferred money to.Click on the box to see overall frequencies.'>
+            <Paper
+              className={classes.paper}
+              onClick={() => {
+                this.handleClickOnOverview("frequentTransactionTo");
+              }}
+              data-intro="Most Frequent contact you have transferred money to.Click on the box to see overall frequencies."
+            >
               <Typography component="h2" variant="display1" gutterBottom>
-                {this.state.frequentTransactionTo?this.state.frequentTransactionTo:'∞'}
+                {this.state.frequentTransactionTo
+                  ? this.state.frequentTransactionTo
+                  : "∞"}
               </Typography>
               <Typography variant="caption" gutterBottom align="center">
                 Frequent transaction to(click to see more)
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>
-              <Typography component="h2" variant="display1" gutterBottom>
-                ∞
-              </Typography>
-              <Typography variant="caption" gutterBottom align="center">
-                coming soon..
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>
-              <Typography component="h2" variant="display1" gutterBottom>
-                ∞
-              </Typography>
-              <Typography variant="caption" gutterBottom align="center">
-                coming soon..
               </Typography>
             </Paper>
           </Grid>

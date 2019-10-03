@@ -1,31 +1,29 @@
 export default class Modal {
-  constructor () {
+  constructor() {
     this.defaultValue = 0;
   }
   setDefaultValue(value) {
     this.defaultValue = value;
   }
-  proxy () {
+  proxy() {
     let handler = {
-      get: (target , name) => {
+      get: (target, name) => {
         if (name === "You") {
           return -1000;
         }
-        return name in target ?
-          target[name] :  this.defaultValue ;
+        return name in target ? target[name] : this.defaultValue;
       }
-    }
+    };
     let obj = {};
     return new Proxy(obj, handler);
   }
-  dateProxy () {
+  dateProxy() {
     let handler = {
-      get: (target , name) => {
+      get: (target, name) => {
         if (name in target) {
           return target[name];
-        }
-        else {
-          return target[name]={
+        } else {
+          return (target[name] = {
             "0": this.defaultValue,
             "1": this.defaultValue,
             "2": this.defaultValue,
@@ -38,20 +36,18 @@ export default class Modal {
             "9": this.defaultValue,
             "10": this.defaultValue,
             "11": this.defaultValue
-          }
+          });
         }
       }
     };
     let obj = {};
     return new Proxy(obj, handler);
   }
-  getMax(obj)  {
-    let res=0;
-    try{
-      res = Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);;
-    }
-    catch (e) {
-    }
-    return  res;
+  getMax(obj) {
+    let res = 0;
+    try {
+      res = Object.keys(obj).reduce((a, b) => (obj[a] > obj[b] ? a : b));
+    } catch (e) {}
+    return res;
   }
 }

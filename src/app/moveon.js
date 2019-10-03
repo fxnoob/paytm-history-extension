@@ -1,1 +1,1 @@
-window.location.href="/option.html";
+window.location.href = "/option.html";
