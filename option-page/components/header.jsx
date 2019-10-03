@@ -110,7 +110,7 @@ class Header extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Paytm History
+              Paytm Stats
             </Typography>
             <Button color="inherit" onClick={this.help}>
               Help

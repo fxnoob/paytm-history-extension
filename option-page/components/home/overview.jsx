@@ -332,26 +332,6 @@ class Overview extends React.Component {
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>
-              <Typography component="h2" variant="display1" gutterBottom>
-                {Math.round(this.props.transactionMaxAmount)} ₹
-              </Typography>
-              <Typography variant="caption" gutterBottom align="center">
-                Maximum amount transaction
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>
-              <Typography component="h2" variant="display1" gutterBottom>
-                {Math.round(this.props.transactionMinAmount)} ₹
-              </Typography>
-              <Typography variant="caption" gutterBottom align="center">
-                Minimum amount transaction
-              </Typography>
-            </Paper>
-          </Grid>
         </Grid>
       </div>
     );

@@ -130,7 +130,7 @@ class MediaControlCard extends React.Component {
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography component="h6" variant="h6">
-            Paytm History
+            Paytm Stats
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             Click 'Fetch' button to see total money u have spent.
