@@ -72,7 +72,7 @@ class Overview extends React.Component {
     dataTablePanelOpen: false,
     spentMoneyDataTable: [],
     addedMoneyDataTable: [],
-    userData: null,
+    userData: false,
     datatableDataToShow: [["", "", "", "", "", "", ""]],
     transactionMaxAmount: 0,
     transactionMinAmount: 0
@@ -88,10 +88,12 @@ class Overview extends React.Component {
       frequentTransactionTo,
       frequentTransactionFrom,
       transactionMinAmount,
-      transactionMaxAmount
+      transactionMaxAmount,
+      userData
     } = this.props;
     console.log(frequentTransactionTo);
     this.setState({
+      userData: userData,
       totalSpent: totalSpent,
       totalAdded: totalAdded,
       frequentTransactionTo: modal.getMax(frequentTransactionTo),
@@ -110,6 +112,7 @@ class Overview extends React.Component {
         frequentTransactionFrom,
         userData
       } = nextProps;
+      console.log(userData);
       this.setState({
         totalSpent: totalSpent,
         totalAdded: totalAdded,

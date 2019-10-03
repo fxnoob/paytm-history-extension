@@ -26,6 +26,7 @@ chrome.extension.onConnect.addListener(port => {
       port.postMessage({ action: "fetchTxHistory", status: "initiated" });
       txnParser()
         .then(async res => {
+          console.log({res})
           await db.set({ fetchTxHistoryStatus: "success", ...res });
           port.postMessage({
             action: "fetchTxHistory",

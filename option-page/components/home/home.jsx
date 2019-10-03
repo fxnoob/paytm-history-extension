@@ -35,8 +35,9 @@ export default class Home extends Component {
       this.setState({ loaded: true });
     }, 3000);
     /** check if data was fetched previously */
-    db.get(["userData", "stats", "help"])
+    db.gets("userData", "stats", "help")
       .then(res => {
+        console.log({res})
         this.setState({
           userData: res.userData,
           totalAdded: String(res.userData.totalAdded),
