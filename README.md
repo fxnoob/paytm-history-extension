@@ -43,4 +43,4 @@
 
 #### Contributers
 
- [Talha Anwar](https://github.com/imox2)
+ [Talha Anwar](https://nosemantic.com)
