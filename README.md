@@ -41,4 +41,6 @@
 
 [screen](screens/screen6.png)
 
-> `Note`: some features are not complete due to time limit. will update some time later.
+#### Contributers
+
+ [Talha Anwar](https://nosemantic.com)
