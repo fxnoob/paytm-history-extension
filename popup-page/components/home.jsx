@@ -111,7 +111,7 @@ class MediaControlCard extends React.Component {
         </Typography>
         <hr/>
         <Typography variant="subtitle1" color="textSecondary">
-          {Math.round(this.state.spentMoney)} ₹ spent.
+          {Math.round(this.state.spentMoney)} rupees spent.
         </Typography>
         <Typography
           variant="subtitle1"
