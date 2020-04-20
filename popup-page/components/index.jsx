@@ -1,5 +1,4 @@
 import React from "react";
-import Card from "@material-ui/core/Card";
 import Home from "./home";
 import Login from "./login";
 import Db from "../../src/utils/db";
@@ -34,13 +33,16 @@ class MediaControlCard extends React.Component {
   };
   render() {
     return (
-      <Card>
+      <React.Fragment>
         {this.state.isDataMounted ? (
           <Home gotoLogin={this.gotoLogin} />
         ) : (
           <Login gotoHome={this.gotoHome} />
         )}
-      </Card>
+        <div style={{textAlign:'center', textDecoration: 'none'}}>
+          <a href="https://www.buymeacoffee.com/fxnoob" target="__blank">Buy me a Coffee.</a>
+        </div>
+      </React.Fragment>
     );
   }
 }

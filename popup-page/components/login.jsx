@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Link from "@material-ui/core/Link";
 import Warning from "@material-ui/icons/Warning";
 
 import Db from "../../src/utils/db";
@@ -18,12 +17,14 @@ const styles = theme => ({
     minWidth: "200px"
   },
   content: {
+    textAlign: "center",
     flex: "1 0 auto"
   },
   cover: {
     width: 151
   },
   progress: {
+    fontSize: 'small',
     margin: theme.spacing.unit
   },
   link: {
@@ -31,6 +32,13 @@ const styles = theme => ({
     fontSize: "38px"
   },
   controls: {
+    margin: '15px',
+    marginTop: 'auto',
+    cursor: 'pointer',
+    fontSize: "25px",
+    padding: "8px 7px 8px 8px",
+    backgroundColor: 'aliceblue',
+    justifyContent: "center",
     display: "flex",
     alignItems: "center",
     paddingLeft: theme.spacing.unit,
@@ -125,33 +133,22 @@ class MediaControlCard extends React.Component {
     this.port.postMessage({ action: "fetchTxHistory" });
   }
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography component="h6" variant="h6">
-            Paytm Stats
+            PAYTM STATS
           </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            Click 'Fetch' button to see total money u have spent.
-          </Typography>
+          <hr/>
         </CardContent>
-        <div className={classes.controls}>
-          <Link
-            href={this.state.loginLink}
-            target="_blank"
-            onClick={this.fetchAction}
-            className={classes.link}
-          >
-            {this.state.actionLabel}{" "}
-            {this.state.showFetchActionLoadingIcon && (
-              <CircularProgress className={classes.progress} />
-            )}
-            {this.state.showFetchActionErrorIcon && (
-              <Warning className={classes.progress} />
-            )}
-          </Link>
-          <div>{this.state.message}</div>
+        <div
+          className={classes.controls}
+          onClick={this.fetchAction}>
+          {this.state.actionLabel}{" "}
+        </div>
+        <div style={{textAlign:'center'}}>
+          {this.state.message}
         </div>
       </div>
     );

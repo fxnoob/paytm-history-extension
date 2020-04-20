@@ -29,8 +29,8 @@ export const txnParser = async () => {
         thd.response.map(order => {
           if (order.txnStatus === "SUCCESS") {
             if (order.txntype === "DR") {
-              if (transactionToMaxAmount < order.txnTo) {
-                transactionToMaxAmount = order.txnTo;
+              if (transactionToMaxAmount < order.extendedTxnInfo[0].amount) {
+                transactionToMaxAmount = order.extendedTxnInfo[0].amount;
               }
               transactionWithFreqTo[order.txnTo]++;
               totalSpent += order.extendedTxnInfo[0].amount;
@@ -50,8 +50,8 @@ export const txnParser = async () => {
                 order.txndate
               ]);
             } else if (order.txntype === "CR") {
-              if (transactionFromMaxAmount < order.txntype) {
-                transactionFromMaxAmount = order.txntype;
+              if (transactionFromMaxAmount < order.extendedTxnInfo[0].amount) {
+                transactionFromMaxAmount = order.extendedTxnInfo[0].amount;
               }
               userTxnFrequencyFrom[order.txnFrom]++;
               totalAdded += order.extendedTxnInfo[0].amount;

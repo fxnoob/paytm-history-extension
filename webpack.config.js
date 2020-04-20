@@ -31,7 +31,7 @@ module.exports = {
         loader: "url-loader?limit=100000"
       },
       {
-        test: /src\.m?((js)|ttf|eot|svg|(jpg))$/,
+        test: /src\.m?((js)|ttf|eot|svg|(jpg)|(jpeg))$/,
         use: {
           loader: "file-loader",
           options: {
@@ -70,6 +70,7 @@ module.exports = {
       ".jsx",
       ".json",
       ".jpg",
+      ".jpeg",
       ".css",
       ".svg",
       ".eot",

@@ -5,13 +5,34 @@ import Lottie from "lottie-react-web";
 import loader from "./loader";
 import HeaderComponent from "../header";
 import Overview from "./overview";
-import Charts from "./charts";
-
+import MonthlyReports from "./MonthlyReports";
 import Db from "../../../src/utils/db";
-
+import { withStyles } from "@material-ui/core/styles";
 const db = new Db();
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2
+  },
+  title: {
+    opacity: 0,
+    marginLeft: theme.spacing.unit * 2
+  },
+  content: {
+    marginRight: theme.spacing.unit
+  },
+  paper: {
+    cursor: "hand",
+    padding: theme.spacing.unit * 1,
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    height: "140px"
+  }
+});
 
-export default class Home extends Component {
+class Home extends Component {
   state = {
     isDataMounted: false,
     totalSpent: 0,
@@ -58,8 +79,9 @@ export default class Home extends Component {
       });
   }
   render() {
+    const { classes } = this.props;
     return this.state.loaded ? (
-      <React.Fragment>
+      <div className={classes.root}>
         <HeaderComponent />
         {/*overview boxes*/}
         <Overview
@@ -72,8 +94,8 @@ export default class Home extends Component {
           transactionMinAmount={this.state.transactionMinAmount}
         />
         {/*basic charts*/}
-        <Charts data={this.state.statData} />
-      </React.Fragment>
+        <MonthlyReports data={this.state.statData} />
+      </div>
     ) : (
       <React.Fragment>
         <Lottie
@@ -85,3 +107,5 @@ export default class Home extends Component {
     );
   }
 }
+
+export default withStyles(styles)(Home);

@@ -10,11 +10,21 @@ class Index extends React.Component {
   }
 
   render() {
+   const props = this.props;
     return (
       <Router>
-        <Route path="/option.html" exact component={Home} />
-        <Route path="/about.html" component={About} />
-        <Route path="/calendar.html" component={Calendar} />
+        <Route
+          path="/option.html"
+          render={(props) => <Home {...props}/>}
+        />
+        <Route
+          path="/about.html"
+          render={(props) => <About {...props}/>}
+        />
+        <Route
+          path="/calendar.html"
+          render={(props) => <Calendar {...props}/>}
+        />
       </Router>
     );
   }

@@ -27,6 +27,7 @@ const styles = theme => ({
     minWidth: "200px"
   },
   content: {
+    textAlign: "center",
     flex: "1 0 auto",
     minWidth: "200px"
   },
@@ -34,6 +35,12 @@ const styles = theme => ({
     width: 151
   },
   controls: {
+    cursor: 'pointer',
+    fontSize: "25px",
+    padding: "8px 7px 8px 8px",
+    backgroundColor: 'aliceblue',
+    justifyContent: "center",
+    alignItems: "center",
     display: "flex",
   },
   playIcon: {
@@ -100,8 +107,9 @@ class MediaControlCard extends React.Component {
     return (
       <CardContent className={classes.content}>
         <Typography component="h6" variant="h6">
-          Paytm Stats
+          PAYTM STATS
         </Typography>
+        <hr/>
         <Typography variant="subtitle1" color="textSecondary">
           {Math.round(this.state.spentMoney)} ₹ spent.
         </Typography>
