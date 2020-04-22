@@ -1,6 +1,6 @@
 {
   "name": "paytm stats",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "manifest_version": 2,
   "description": "A chrome extension to show stats based on paytm purchase history.",
   "icons": {
@@ -12,12 +12,9 @@
     "scripts": ["background.bundle.js"]
   },
   "permissions": [
-    "unlimitedStorage",
     "storage",
-    "webNavigation",
     "*://paytm.com/*",
-    "*://*.paytm.com/*",
-    "cookies"
+    "*://*.paytm.com/*"
   ],
   "browser_action": {
     "default_icon": {
