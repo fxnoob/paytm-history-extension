@@ -8,12 +8,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import Modal from "../../../src/utils/modal";
-import MiniCard from './MiniCard';
-import SpentMoneyIcon from '@material-ui/icons/Publish';
-import AddedMoneyIcon from '@material-ui/icons/GetApp';
-import MaxiMinIcon from '@material-ui/icons/MaximizeRounded';
-import FrequentTransactionIcon from '@material-ui/icons/SettingsInputComponent';
+import Modal from "../../../utils/modal";
+import MiniCard from "./MiniCard";
+import SpentMoneyIcon from "@material-ui/icons/Publish";
+import AddedMoneyIcon from "@material-ui/icons/GetApp";
+import MaxiMinIcon from "@material-ui/icons/MaximizeRounded";
+import FrequentTransactionIcon from "@material-ui/icons/SettingsInputComponent";
 
 const modal = new Modal();
 const styles = theme => ({
@@ -81,7 +81,7 @@ class Overview extends React.Component {
       transactionMaxAmount,
       userData
     } = this.props;
-    console.log({transactionMaxAmount, transactionMinAmount});
+    console.log({ transactionMaxAmount, transactionMinAmount });
     this.setState({
       userData: userData,
       totalSpent: totalSpent,
@@ -102,7 +102,7 @@ class Overview extends React.Component {
       let i = 0;
       plotData = Object.entries(this.state.frequentTransactiotoData).map(
         point => {
-          console.log({point});
+          console.log({ point });
           return {
             x: i++,
             y: Number(point[1]),
@@ -114,7 +114,7 @@ class Overview extends React.Component {
       );
       const frequentTransactiotoFromData = plotData.map(data => {
         return [data.contact, data.y];
-      })
+      });
       this.setState({
         open: true,
         scroll,
@@ -139,13 +139,13 @@ class Overview extends React.Component {
       );
       const frequentTransactiotoFromData = plotData.map(data => {
         return [data.contact, data.y];
-      })
+      });
       this.setState({
         open: true,
         scroll,
         title: title,
         frequentTransactiotoDataPlot: plotData,
-        frequentTransactiotoFromData: frequentTransactiotoFromData,
+        frequentTransactiotoFromData: frequentTransactiotoFromData
       });
     } else if (overViewFor === "totalSpentDatatable") {
       title = "Total spent datatable";
@@ -173,7 +173,7 @@ class Overview extends React.Component {
   }
   handledataTableClose = () => {
     this.setState({ dataTablePanelOpen: false });
-  }
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -209,7 +209,7 @@ class Overview extends React.Component {
           <DialogTitle id="scroll-dialog-title">{this.state.title}</DialogTitle>
           <DialogContent>
             <MUIDataTable
-              columns={['Contact', 'Frequency']}
+              columns={["Contact", "Frequency"]}
               data={this.state.frequentTransactiotoFromData}
               options={options}
             />
@@ -228,10 +228,12 @@ class Overview extends React.Component {
         <Grid container spacing={24} className={classes.content}>
           <Grid item xs={2}>
             <MiniCard
-            Icon={SpentMoneyIcon}
-            title="Total Spent (₹)"
-            stat={Math.round(this.state.totalSpent)}
-            seeMoreCallback={()=> {this.handleClickOnOverview("totalSpentDatatable");}}
+              Icon={SpentMoneyIcon}
+              title="Total Spent (₹)"
+              stat={Math.round(this.state.totalSpent)}
+              seeMoreCallback={() => {
+                this.handleClickOnOverview("totalSpentDatatable");
+              }}
             />
           </Grid>
           <Grid item xs={2}>
@@ -239,7 +241,9 @@ class Overview extends React.Component {
               Icon={AddedMoneyIcon}
               title="Total Added (₹)"
               stat={Math.round(this.state.totalAdded)}
-              seeMoreCallback={()=> {this.handleClickOnOverview("totalAddedDatatable");}}
+              seeMoreCallback={() => {
+                this.handleClickOnOverview("totalAddedDatatable");
+              }}
             />
           </Grid>
           <Grid item xs={2}>
@@ -247,7 +251,9 @@ class Overview extends React.Component {
               Icon={FrequentTransactionIcon}
               title="Frequent transaction with(from)"
               stat={this.state.frequentTransactionFrom}
-              seeMoreCallback={()=> {this.handleClickOnOverview("frequentTransactionFrom");}}
+              seeMoreCallback={() => {
+                this.handleClickOnOverview("frequentTransactionFrom");
+              }}
             />
           </Grid>
           <Grid item xs={2}>
@@ -255,7 +261,9 @@ class Overview extends React.Component {
               Icon={FrequentTransactionIcon}
               title="Frequent trans. with(to)"
               stat={this.state.frequentTransactionTo}
-              seeMoreCallback={()=> {this.handleClickOnOverview("frequentTransactionTo");}}
+              seeMoreCallback={() => {
+                this.handleClickOnOverview("frequentTransactionTo");
+              }}
             />
           </Grid>
         </Grid>

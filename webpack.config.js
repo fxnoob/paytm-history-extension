@@ -1,81 +1,75 @@
-const path = require("path");
+const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const dotenv = require("dotenv").config({ path: __dirname + "/.env" });
+const { manifestTransform } = require("./scripts/transform");
 
-module.exports = {
-  entry: {
-    background: "./src/background.js",
-    popup: "./popup-page/App.jsx",
-    option: "./option-page/App.jsx"
-  },
-  module: {
-    rules: [
-      {
-        test: /\.((jsx)|(jpg))$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: "babel-loader",
-        options: {
-          presets: ["@babel/preset-react", "@babel/preset-env"]
+module.exports = (env, options) => {
+  return {
+    entry: {
+      background: "./src/background.js",
+      popup: "./src/popup-page/App.jsx",
+      option: "./src/option-page/App.jsx"
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: ["babel-loader"]
+        },
+        {
+          test: /\.css$/,
+          use: ["style-loader", "css-loader"]
+        },
+        {
+          test: /\.(gif|png|jpe?g|svg)$/i,
+          use: [
+            "file-loader",
+            {
+              loader: "image-webpack-loader",
+              options: {
+                bypassOnDebug: true, // webpack@1.x
+                disable: true // webpack@2.x and newer
+              }
+            }
+          ]
         }
-      },
-      {
-        test: /src\.m?((js)|(jpg))$/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"]
+      ]
+    },
+    resolve: {
+      extensions: ["*", ".js", ".jsx", ".json"]
+    },
+    output: {
+      path: __dirname + "/dist",
+      publicPath: "/",
+      filename: "[name].bundle.js"
+    },
+    plugins: [
+      new CopyWebpackPlugin(
+        [
+          { from: "./src/popup-page/popup.html", force: true },
+          { from: "./src/option-page/option.html", force: true },
+          { from: "./src/app/", force: true }
+        ],
+        {}
+      ),
+      new webpack.DefinePlugin({
+        "process.env": dotenv.parsed
+      }),
+      new CopyWebpackPlugin([
+        {
+          from: "./src/app/manifest.json",
+          force: true,
+          transform(content, path) {
+            return manifestTransform(content, path, options);
           }
         }
-      },
-      {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: "url-loader?limit=100000"
-      },
-      {
-        test: /src\.m?((js)|ttf|eot|svg|(jpg)|(jpeg))$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            presets: ["@babel/preset-env"]
-          }
-        }
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      },
-      {
-        test: /\.svg$/,
-        loader: "svg-inline-loader"
-      }
-    ]
-  },
-  plugins: [
-    new CopyWebpackPlugin(
-      [
-        { from: "./src/app/", force: true },
-        { from: "./popup-page/popup.html", force: true },
-        { from: "./option-page/option.html", force: true }
-      ],
-      {}
-    )
-  ],
-  output: {
-    path: path.join(__dirname, "dist"),
-    filename: "[name].bundle.js"
-  },
-  resolve: {
-    modules: ["./src/data", "node_modules"],
-    extensions: [
-      ".js",
-      ".jsx",
-      ".json",
-      ".jpg",
-      ".jpeg",
-      ".css",
-      ".svg",
-      ".eot",
-      ".ttf",
-      ".woff"
-    ]
-  }
+      ]),
+      new webpack.HotModuleReplacementPlugin()
+    ],
+    devServer: {
+      contentBase: "./dist",
+      hot: true
+    }
+  };
 };

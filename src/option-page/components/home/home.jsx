@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import introJs from "intro.js";
+import introJs from "../../../../node_modules/intro.js/intro";
 import "intro.js/introjs.css";
 import Lottie from "lottie-react-web";
 import loader from "./loader";
 import HeaderComponent from "../header";
 import Overview from "./overview";
 import MonthlyReports from "./MonthlyReports";
-import Db from "../../../src/utils/db";
+import Db from "../../../utils/db";
 import { withStyles } from "@material-ui/core/styles";
 const db = new Db();
 const styles = theme => ({
@@ -58,7 +58,7 @@ class Home extends Component {
     /** check if data was fetched previously */
     db.gets("userData", "stats", "help")
       .then(res => {
-        console.log({res})
+        console.log({ res });
         this.setState({
           userData: res.userData,
           totalAdded: String(res.userData.totalAdded),

@@ -3,14 +3,14 @@ import { withStyles } from "@material-ui/core/styles";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import Db from "../../src/utils/db";
+import Db from "../../utils/db";
 
 const styles = theme => ({
   card: {
     display: "flex"
   },
   RefreshShareDiv: {
-    fontSize: "14px",
+    fontSize: "14px"
   },
   shareLink: {
     marginLeft: theme.spacing.unit
@@ -35,13 +35,13 @@ const styles = theme => ({
     width: 151
   },
   controls: {
-    cursor: 'pointer',
+    cursor: "pointer",
     fontSize: "25px",
     padding: "8px 7px 8px 8px",
-    backgroundColor: 'aliceblue',
+    backgroundColor: "aliceblue",
     justifyContent: "center",
     alignItems: "center",
-    display: "flex",
+    display: "flex"
   },
   playIcon: {
     height: 38,
@@ -109,7 +109,7 @@ class MediaControlCard extends React.Component {
         <Typography component="h6" variant="h6">
           PAYTM STATS
         </Typography>
-        <hr/>
+        <hr />
         <Typography variant="subtitle1" color="textSecondary">
           {Math.round(this.state.spentMoney)} rupees spent.
         </Typography>
@@ -123,7 +123,7 @@ class MediaControlCard extends React.Component {
         <Link href="" onClick={this.refreshDetails} className={classes.linkR}>
           refresh
         </Link>
-        <br/>
+        <br />
         <Link href="/option.html" target="_blank" className={classes.link}>
           Detailed Report
         </Link>

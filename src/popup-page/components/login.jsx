@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Warning from "@material-ui/icons/Warning";
 
-import Db from "../../src/utils/db";
+import Db from "../../utils/db";
 
 const styles = theme => ({
   card: {
@@ -24,7 +24,7 @@ const styles = theme => ({
     width: 151
   },
   progress: {
-    fontSize: 'small',
+    fontSize: "small",
     margin: theme.spacing.unit
   },
   link: {
@@ -32,12 +32,12 @@ const styles = theme => ({
     fontSize: "38px"
   },
   controls: {
-    margin: '15px',
-    marginTop: 'auto',
-    cursor: 'pointer',
+    margin: "15px",
+    marginTop: "auto",
+    cursor: "pointer",
     fontSize: "25px",
     padding: "8px 7px 8px 8px",
-    backgroundColor: 'aliceblue',
+    backgroundColor: "aliceblue",
     justifyContent: "center",
     display: "flex",
     alignItems: "center",
@@ -140,16 +140,12 @@ class MediaControlCard extends React.Component {
           <Typography component="h6" variant="h6">
             PAYTM STATS
           </Typography>
-          <hr/>
+          <hr />
         </CardContent>
-        <div
-          className={classes.controls}
-          onClick={this.fetchAction}>
+        <div className={classes.controls} onClick={this.fetchAction}>
           {this.state.actionLabel}{" "}
         </div>
-        <div style={{textAlign:'center'}}>
-          {this.state.message}
-        </div>
+        <div style={{ textAlign: "center" }}>{this.state.message}</div>
       </div>
     );
   }

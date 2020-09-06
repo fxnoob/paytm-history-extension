@@ -7,9 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import HeaderComponent from "../header";
-import dates from "../../../src/utils/dates";
-import dB from "../../../src/utils/db";
-import { txnParserCalendarEventsInput } from "../../../src/utils/responseParser";
+import dates from "../../../utils/dates";
+import dB from "../../../utils/db";
+import { txnParserCalendarEventsInput } from "../../../utils/responseParser";
 
 const db = new dB();
 const localizer = BigCalendar.momentLocalizer(moment);

@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "./home";
 import Login from "./login";
-import Db from "../../src/utils/db";
+import Db from "../../utils/db";
 
 const db = new Db();
 
@@ -39,8 +39,10 @@ class MediaControlCard extends React.Component {
         ) : (
           <Login gotoHome={this.gotoHome} />
         )}
-        <div style={{textAlign:'center', textDecoration: 'none'}}>
-          <a href="https://www.buymeacoffee.com/fxnoob" target="__blank">Buy me a Coffee.</a>
+        <div style={{ textAlign: "center", textDecoration: "none" }}>
+          <a href="https://www.buymeacoffee.com/fxnoob" target="__blank">
+            Buy me a Coffee.
+          </a>
         </div>
       </React.Fragment>
     );

@@ -7,10 +7,23 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 import MUIDataTable from "mui-datatables";
 const options = {
   filterType: "checkbox",
-  rowsPerPage: 12,
+  rowsPerPage: 12
 };
-const MonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const columns = ['Month', 'Total Transaction'];
+const MonthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+const columns = ["Month", "Total Transaction"];
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -54,10 +67,10 @@ class Charts extends Component {
     frequentTransactionFrom: "",
     graphData1: null,
     barGraphdata1: [],
-    monthlyExpensedataTableTitle: 'Monthly Expenses',
+    monthlyExpensedataTableTitle: "Monthly Expenses",
     crosshairValues: [],
-    selectedYear: '',
-    monthlyExpenseData: [],
+    selectedYear: "",
+    monthlyExpenseData: []
   };
 
   constructor(props) {
@@ -81,11 +94,13 @@ class Charts extends Component {
   changeYear = year => {
     const data = this.props.data;
     console.log(data);
-    const response = Object.entries(data[year])
-      .map(point => [MonthNames[point[0]], point[1]]);
-    console.log({response});
-    this.setState({ monthlyExpenseData: response, selectedYear: year});
-  }
+    const response = Object.entries(data[year]).map(point => [
+      MonthNames[point[0]],
+      point[1]
+    ]);
+    console.log({ response });
+    this.setState({ monthlyExpenseData: response, selectedYear: year });
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -99,20 +114,20 @@ class Charts extends Component {
           data-intro="years in which you have done transaction. Click on any year button to see total monthly expense bar graph"
         >
           {this.state.graphData1 &&
-          Object.keys(this.state.graphData1).map(year => {
-            return (
-              <Button
-                key={year}
-                variant="contained"
-                onClick={() => {
-                  this.changeYear(year);
-                }}
-                className={classes.button}
-              >
-                {year}
-              </Button>
-            );
-          })}
+            Object.keys(this.state.graphData1).map(year => {
+              return (
+                <Button
+                  key={year}
+                  variant="contained"
+                  onClick={() => {
+                    this.changeYear(year);
+                  }}
+                  className={classes.button}
+                >
+                  {year}
+                </Button>
+              );
+            })}
           <Typography
             component="p"
             variant="display1"
@@ -120,7 +135,7 @@ class Charts extends Component {
             style={{
               marginTop: "30px",
               marginLeft: "10px",
-              fontSize: '20px',
+              fontSize: "20px"
             }}
           >
             Click on any year to see monthly transactions

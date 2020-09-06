@@ -29,18 +29,18 @@
 
 ### Screens
 
-[screen](screens/screen1.png)
+[screen](webstore/screens/screen1.png)
 
-[screen](screens/screen2.png)
+[screen](webstore/screens/screen2.png)
 
-[screen](screens/screen3.png)
+[screen](webstore/screens/screen3.png)
 
-[screen](screens/screen4.png)
+[screen](webstore/screens/screen4.png)
 
-[screen](screens/screen5.png)
+[screen](webstore/screens/screen5.png)
 
-[screen](screens/screen6.png)
+[screen](webstore/screens/screen6.png)
 
 #### Contributors
 
- [Talha Anwar](https://github.com/imox2)
+[Talha Anwar](https://github.com/imox2)
