@@ -5,7 +5,7 @@ import Db from "../../utils/db";
 
 const db = new Db();
 
-class MediaControlCard extends React.Component {
+class Index extends React.Component {
   state = {
     isDataMounted: false
   };
@@ -33,20 +33,27 @@ class MediaControlCard extends React.Component {
   };
   render() {
     return (
-      <React.Fragment>
+      <div style={{ width: "350px" }}>
         {this.state.isDataMounted ? (
           <Home gotoLogin={this.gotoLogin} />
         ) : (
           <Login gotoHome={this.gotoHome} />
         )}
-        <div style={{ textAlign: "center", textDecoration: "none" }}>
+        <div
+          style={{
+            textAlign: "center",
+            textDecoration: "none",
+            paddingTop: "1rem",
+            paddingBottom: "0.2rem"
+          }}
+        >
           <a href="https://www.buymeacoffee.com/fxnoob" target="__blank">
             Buy me a Coffee.
           </a>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-export default MediaControlCard;
+export default Index;
