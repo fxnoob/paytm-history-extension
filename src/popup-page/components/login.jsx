@@ -110,7 +110,9 @@ class Login extends React.Component {
             style={{ color: "#808080e0", height: "9rem" }}
             className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"
           >
-            {this.state.fetching || this.state.showFetchActionErrorIcon
+            {this.state.fetching ||
+            this.state.showFetchActionErrorIcon ||
+            this.state.showFetchActionLoadingIcon
               ? ""
               : infoText}
             {this.state.showFetchActionLoadingIcon && <Loader />}

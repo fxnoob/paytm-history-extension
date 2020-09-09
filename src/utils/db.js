@@ -15,6 +15,8 @@ export class Schema {
         totalSpent: 0,
         /** total money added to paytm wallet by user*/
         totalAdded: 0,
+        /** total number of qr code scans for transaction*/
+        totalQRCodeScans: 0,
         /** frequent transaction to  */
         frequentTransactionTo: "",
         /** frequent transaction from  */

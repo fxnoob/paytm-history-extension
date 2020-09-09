@@ -72,9 +72,7 @@
     "react-big-calendar": "^0.20.3",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.6.3",
-    "react-router": "5.2.0",
-    "react-router-dom": "^5.0.0",
-    "react-vis": "^1.11.6",
+    "react-router-dom": "^5.2.0",
     "tailwindcss": "^1.8.3"
   }
 }

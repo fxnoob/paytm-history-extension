@@ -18,7 +18,8 @@ export const txnParser = async () => {
     let totalSpent = 0,
       totalAdded = 0,
       transactionToMaxAmount = 0,
-      transactionFromMaxAmount = 0;
+      transactionFromMaxAmount = 0,
+      totalQRCodeScans = 0;
     const dateDataMonthlySpent = modal.dateProxy();
     const transactionWithFreqTo = modal.proxy();
     const userTxnFrequencyFrom = modal.proxy();
@@ -28,6 +29,9 @@ export const txnParser = async () => {
       if (thd.statusCode === "SUCCESS") {
         thd.response.map(order => {
           if (order.txnStatus === "SUCCESS") {
+            if (order.mode == "QR_CODE") {
+              totalQRCodeScans++;
+            }
             if (order.txntype === "DR") {
               if (transactionToMaxAmount < order.extendedTxnInfo[0].amount) {
                 transactionToMaxAmount = order.extendedTxnInfo[0].amount;
@@ -83,6 +87,8 @@ export const txnParser = async () => {
         totalSpent: totalSpent,
         /** total money added to paytm wallet by user*/
         totalAdded: totalAdded,
+        /** total number of qr code scans for transaction*/
+        totalQRCodeScans: totalQRCodeScans,
         /** users transactions with frequency to {user: frequency}*/
         userTxnFrequencyTo: transactionWithFreqTo,
         /** users transactions with frequency from {user: frequency}*/

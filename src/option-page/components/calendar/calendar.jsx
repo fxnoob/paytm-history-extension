@@ -6,7 +6,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
-import HeaderComponent from "../header";
 import dates from "../../../utils/dates";
 import dB from "../../../utils/db";
 import { txnParserCalendarEventsInput } from "../../../utils/responseParser";
@@ -64,7 +63,6 @@ class Calendar extends React.Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <HeaderComponent />
         <div className={classes.title}>
           <Grid container spacing={24}>
             <Grid item xs={12}>

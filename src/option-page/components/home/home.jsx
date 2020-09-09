@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import introJs from "../../../../node_modules/intro.js/intro";
 import "intro.js/introjs.css";
-import Lottie from "lottie-react-web";
-import loader from "./loader";
-import HeaderComponent from "../header";
 import Overview from "./overview";
 import MonthlyReports from "./MonthlyReports";
 import Db from "../../../utils/db";
@@ -37,6 +34,7 @@ class Home extends Component {
     isDataMounted: false,
     totalSpent: 0,
     totalAdded: 0,
+    totalQRCodeScans: 0,
     frequentTransactionTo: [],
     frequentTransactionFrom: [],
     showChart: false,
@@ -52,9 +50,6 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ loaded: true });
-    }, 3000);
     /** check if data was fetched previously */
     db.gets("userData", "stats", "help")
       .then(res => {
@@ -62,6 +57,7 @@ class Home extends Component {
         this.setState({
           userData: res.userData,
           totalAdded: String(res.userData.totalAdded),
+          totalQRCodeScans: String(res.userData.totalQRCodeScans),
           totalSpent: String(res.userData.totalSpent),
           frequentTransactionTo: res.userData.userTxnFrequencyTo,
           frequentTransactionFrom: res.userData.userTxnFrequencyFrom,
@@ -80,10 +76,8 @@ class Home extends Component {
   }
   render() {
     const { classes } = this.props;
-    return this.state.loaded ? (
+    return (
       <div className={classes.root}>
-        <HeaderComponent />
-        {/*overview boxes*/}
         <Overview
           totalSpent={this.state.totalSpent}
           totalAdded={this.state.totalAdded}
@@ -92,18 +86,11 @@ class Home extends Component {
           userData={this.state.userData}
           transactionMaxAmount={this.state.transactionMaxAmount}
           transactionMinAmount={this.state.transactionMinAmount}
+          totalQRCodeScans={this.state.totalQRCodeScans}
         />
         {/*basic charts*/}
         <MonthlyReports data={this.state.statData} />
       </div>
-    ) : (
-      <React.Fragment>
-        <Lottie
-          options={{
-            animationData: loader
-          }}
-        />
-      </React.Fragment>
     );
   }
 }

@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/es/Typography/Typography";
 import MUIDataTable from "mui-datatables";
 const options = {
   filterType: "checkbox",
@@ -24,39 +20,6 @@ const MonthNames = [
   "December"
 ];
 const columns = ["Month", "Total Transaction"];
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    marginRight: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 2
-  },
-  button: {
-    color: "rgb(130, 130, 130)",
-    backgroundColor: "#ffffff",
-    marginBottom: theme.spacing.unit * 3,
-    marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit
-  },
-  title: {
-    fontSize: 14
-  },
-  content: {
-    marginRight: theme.spacing.unit
-  },
-  paper: {
-    padding: theme.spacing.unit * 1,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  card: {
-    minWidth: 275
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)"
-  }
-});
 
 class Charts extends Component {
   state = {
@@ -102,57 +65,46 @@ class Charts extends Component {
     this.setState({ monthlyExpenseData: response, selectedYear: year });
   };
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <>
         <Divider />
-        <Grid
-          container
-          spacing={24}
-          style={{ marginLeft: "10px" }}
-          className={classes.title}
-          data-intro="years in which you have done transaction. Click on any year button to see total monthly expense bar graph"
+        <div
+          className="bg-white"
+          style={{ paddingTop: "2rem", background: "aliceblue" }}
         >
-          {this.state.graphData1 &&
-            Object.keys(this.state.graphData1).map(year => {
-              return (
-                <Button
-                  key={year}
-                  variant="contained"
-                  onClick={() => {
-                    this.changeYear(year);
-                  }}
-                  className={classes.button}
-                >
-                  {year}
-                </Button>
-              );
-            })}
-          <Typography
-            component="p"
-            variant="display1"
-            gutterBottom
-            style={{
-              marginTop: "30px",
-              marginLeft: "10px",
-              fontSize: "20px"
-            }}
-          >
-            Click on any year to see monthly transactions
-          </Typography>
-        </Grid>
-        <Grid container spacing={24} className={classes.title}>
-          <Grid item xs={4}>
-            <MUIDataTable
-              title={`${this.state.monthlyExpensedataTableTitle}(${this.state.selectedYear})`}
-              data={this.state.monthlyExpenseData}
-              columns={columns}
-              options={options}
-            />
-          </Grid>
-        </Grid>
-      </div>
+          <div className="max-w-7xl mx-auto  px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-4 lg:px-8 lg:py-12 xl:py-16">
+            <p className="text-3xl leading-6 font-medium text-gray-900">
+              Click on any year to see monthly transactions
+            </p>
+            <div className="pt-4 flex space-x-5 items-center">
+              {this.state.graphData1 &&
+                Object.keys(this.state.graphData1).map(year => {
+                  return (
+                    <span
+                      key={year}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        this.changeYear(year);
+                      }}
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md   bg-white    transition duration-150 ease-in-out btn"
+                    >
+                      {year}
+                    </span>
+                  );
+                })}
+            </div>
+            <div className="mt-4">
+              <MUIDataTable
+                title={`${this.state.monthlyExpensedataTableTitle}(${this.state.selectedYear})`}
+                data={this.state.monthlyExpenseData}
+                columns={columns}
+                options={options}
+              />
+            </div>
+          </div>
+        </div>
+      </>
     );
   }
 }
-export default withStyles(styles)(Charts);
+export default Charts;

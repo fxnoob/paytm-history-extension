@@ -39,6 +39,7 @@ module.exports = (env, options) => {
     resolve: {
       extensions: ["*", ".js", ".jsx", ".json"]
     },
+    devtool: "inline-sourcemap",
     output: {
       path: __dirname + "/dist",
       publicPath: "/",

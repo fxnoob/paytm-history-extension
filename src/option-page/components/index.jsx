@@ -1,27 +1,43 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import Navbar from "../../components/Navbar";
 import Home from "./home/home";
 import About from "./about";
 import Calendar from "./calendar/calendar";
+import Lottie from "lottie-react-web";
+import loader from "./loader";
 
-class Index extends React.Component {
+export default class Index extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loaded: false
+    };
+  }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ loaded: true });
+    }, 3000);
   }
 
   render() {
-    const props = this.props;
-    return (
+    return this.state.loaded ? (
       <Router>
-        <Route path="/option.html" render={props => <Home {...props} />} />
-        <Route path="/about.html" render={props => <About {...props} />} />
-        <Route
-          path="/calendar.html"
-          render={props => <Calendar {...props} />}
-        />
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/calendar" component={Calendar} />
+        </Switch>
       </Router>
+    ) : (
+      <React.Fragment>
+        <Lottie
+          options={{
+            animationData: loader
+          }}
+        />
+      </React.Fragment>
     );
   }
 }
-
-export default Index;
