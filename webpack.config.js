@@ -1,5 +1,7 @@
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 const dotenv = require("dotenv").config({ path: __dirname + "/.env" });
 const { manifestTransform } = require("./scripts/transform");
 
@@ -66,7 +68,7 @@ module.exports = (env, options) => {
           }
         }
       ]),
-      new webpack.HotModuleReplacementPlugin()
+      new BundleAnalyzerPlugin()
     ],
     devServer: {
       contentBase: "./dist",

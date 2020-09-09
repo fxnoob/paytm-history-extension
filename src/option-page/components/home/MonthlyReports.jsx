@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Divider from "@material-ui/core/Divider";
 import MUIDataTable from "mui-datatables";
 const options = {
   filterType: "checkbox",
@@ -67,7 +66,7 @@ class Charts extends Component {
   render() {
     return (
       <>
-        <Divider />
+        <hr className="divider" />
         <div
           className="bg-white"
           style={{ paddingTop: "2rem", background: "aliceblue" }}

@@ -1,33 +1,9 @@
 import React, { Component } from "react";
-import introJs from "../../../../node_modules/intro.js/intro";
-import "intro.js/introjs.css";
+import introJs from "intro.js/intro";
 import Overview from "./overview";
 import MonthlyReports from "./MonthlyReports";
 import Db from "../../../utils/db";
-import { withStyles } from "@material-ui/core/styles";
 const db = new Db();
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 2
-  },
-  title: {
-    opacity: 0,
-    marginLeft: theme.spacing.unit * 2
-  },
-  content: {
-    marginRight: theme.spacing.unit
-  },
-  paper: {
-    cursor: "hand",
-    padding: theme.spacing.unit * 1,
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    height: "140px"
-  }
-});
 
 class Home extends Component {
   state = {
@@ -75,9 +51,8 @@ class Home extends Component {
       });
   }
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div>
         <Overview
           totalSpent={this.state.totalSpent}
           totalAdded={this.state.totalAdded}
@@ -95,4 +70,4 @@ class Home extends Component {
   }
 }
 
-export default withStyles(styles)(Home);
+export default Home;
